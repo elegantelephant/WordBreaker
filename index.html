@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-        <title>Boggle Tetris</title>
+        <title>Word Breaker</title>
         <script type="text/javascript" src="js/phaser.js"></script>
         <style>
           body {
@@ -16,15 +16,19 @@
 
     <body>
         <!-- include the main game file -->
-        <script src="js/main.js"></script>
+        <!-- include the miscellaneous files -->
         <script src="js/library.js"></script>
+
+        <!-- include the states -->
         <script src="js/states/Boot.js"></script>
         <script src="js/states/Preload.js"></script>
         <script src="js/states/Home.js"></script>
         <script src="js/states/Game.js"></script>
-        <script src="js/Level.js"></script>
-        <script src="js/Player.js"></script>
-        <script src="js/Enemy.js"></script>
+
+        <!-- include the prefabs -->
+        <script src="js/prefabs/Board.js"></script>
+
+        <script src="js/main.js"></script>
     </body>
 </html>
 
