@@ -1,16 +1,16 @@
-var GameName = GameName || {};
+var WB = WB || {};
 
-GameName.BootState = GameName.BootState || {};
+WB.BootState = WB.BootState || {};
 
-GameName.BootState.init = function() {
+WB.BootState.init = function() {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             this.game.stage.backgroundColor = '#aaa';
 };
 
-GameName.BootState.preload = function() {
+WB.BootState.preload = function() {
         this.load.image('logo', 'assets/images/logo.png');
 };          
             
-GameName.BootState.create = function() {
+WB.BootState.create = function() {
         this.state.start('PreloadState');
 };
