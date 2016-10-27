@@ -81,7 +81,7 @@ library.release_click = function(pointer, startPoint, swipeTolerance) {
     }
     else {
         if (Math.abs(deltaY) < swipeTolerance) {
-            this.nab();
+            endPoint.direction = 'tap';
         }
         else if (deltaY < 0) {
             endPoint.direction = 'up';

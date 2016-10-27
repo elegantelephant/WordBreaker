@@ -36,10 +36,10 @@ WB.GameState.create = function() {
 		// click_release contains an x and a y AND a direction
         click_release = library.release_click(pointer, click_position, swipeVsTap);
         if (click_release.direction == 'tap') {
-			console.log("tapped");
+			// console.log("tapped");
 		}
 		else if (click_release.direction) {
-			console.log("swiped " + click_release.direction);
+			// console.log("swiped " + click_release.direction);
 		}
 	}, this);
 };
