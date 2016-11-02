@@ -46,6 +46,11 @@ WB.GameState.create = function() {
 	}, this);
 };
 
+WB.GameState.isWord = function() {
+    // O(n) slow lazy scan for now
+    return this.Board.wordsText.indexOf("\n" + this.Board.currentWord.toLowerCase + "\n") > 0;
+};
+
 WB.GameState.update = function() {
     // runs many times a second
 };
