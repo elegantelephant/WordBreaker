@@ -8,7 +8,7 @@ Board.create = function(level) {
     this.SIZEY = WB.game.world.height;
     this.rows = 9;
     this.columns = 5;
-    
+
     // create and initialize the tiles structure
     this.tiles = Array(this.columns);
     for (var col = 0; col < this.columns; col ++) {
