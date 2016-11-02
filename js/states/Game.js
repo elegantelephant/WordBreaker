@@ -54,4 +54,6 @@ WB.GameState.loadLevel = function() {
     var rows = 8;
     var columns = 9;
     this.Board.createBoard();
+    this.Score.createScore();
+    this.Gold.createGold();
 };

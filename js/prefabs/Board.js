@@ -66,7 +66,7 @@ Board.clicked = function(button) {
 };
 
 Board.generateWordText = function(letter) {
-    this.currentWord = WB.game.add.text(this.SIZEX/2, 40);
+    this.currentWord = WB.game.add.text(this.SIZEX/2, 70);
     this.currentWord.anchor.setTo(0.5);
     this.currentWord.style.font = 'bold 30pt Arial';
     this.currentWord.style.fill = '#2f2';
