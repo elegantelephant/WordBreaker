@@ -6,11 +6,20 @@ var Board = {};
 Board.create = function(level) {
     this.SIZEX = WB.game.world.width;
     this.SIZEY = WB.game.world.height;
-    var rows = 9;
-    var columns = 5;
+    this.rows = 9;
+    this.columns = 5;
+    
+    // create and initialize the tiles structure
+    this.tiles = Array(this.columns);
+    for (var col = 0; col < this.columns; col ++) {
+        this.tiles[col] = Array(this.rows);
+        for (var row = 0; row < this.rows; row ++) {
+            this.tiles[col][row] = { selected: 0, };
+        }
+    }
 
     Board.createLetterPool();
-    Board.generateGrid(rows, columns);
+    Board.generateGrid(this.rows, this.columns);
     Board.generateWordText();
     Board.loadDictionary();
     WB.game.world.bringToTop(this.texts);
@@ -42,6 +51,7 @@ Board.addTile = function(pixX, pixY, x, y) {
     tile.customParams = {};
     tile.customParams.x = x;
     tile.customParams.y = y;
+    this.tiles[x][y].tile = tile;
 };
 
 Board.addLetter = function(pixX, pixY, x, y) {
@@ -65,18 +75,7 @@ Board.addLetter = function(pixX, pixY, x, y) {
 Board.clicked = function(button) {
     var x = button.customParams.x;
     var y = button.customParams.y;
-    this.selected = this.selected || [
-        [0,0,0,0,0],
-        [0,0,0,0,0],
-        [0,0,0,0,0],
-        [0,0,0,0,0],
-        [0,0,0,0,0],
-        [0,0,0,0,0],
-        [0,0,0,0,0],
-        [0,0,0,0,0],
-        [0,0,0,0,0]
-        ];
-    if (! this.selected[x][y]
+    if (! this.tiles[x][y].selected
        && (!this.prevx
          || ((Math.abs(x - this.prevx) < 2
            && Math.abs(y - this.prevy) < 2))
@@ -85,10 +84,22 @@ Board.clicked = function(button) {
         button.alpha = 0.7;
         this.prevx = x;
         this.prevy = y;
-        this.selected[x][y] = 1;
+        this.tiles[x][y].selected = 1;
         this.currentWord.text += this.board[button.customParams.x][button.customParams.y].text;
     }
 };
+
+Board.deselectAll = function() {
+    console.log("deselectAll");
+    for (var col=0; col < this.columns; col++) {
+        for (var row=0; row < this.rows; row++) {
+            this.tiles[col][row].tile.alpha = 1.0;
+            this.tiles[col][row].selected = 0;
+        }
+    }
+    delete this.prevx;
+    delete this.prevy;
+}
 
 Board.generateWordText = function() {
     this.currentWord = WB.game.add.text(this.SIZEX/2, 70);
