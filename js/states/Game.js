@@ -64,7 +64,7 @@ WB.GameState.loadLevel = function() {
     this.Gold.create();
 };
 
-WB.wordSubmit = function() {
+WB.GameState.wordSubmit = function() {
     var word = this.Board.currentWord;
     if (this.isWord(word)) {
         var score = this.getWordScore(word);
@@ -76,7 +76,7 @@ WB.wordSubmit = function() {
     }
 };
 
-WB.wordCancel = function() {
+WB.GameState.wordCancel = function() {
     this.Board.deselectAll();
     this.Board.currentWord.text = '';
 };
