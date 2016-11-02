@@ -19,6 +19,8 @@ WB.PreloadState.preload = function() {
 
     // this.load.text('text_key', 'location/of/text/file');
     // this.load.text('levels', 'assets/data/levels.json');
+
+    this.load.text('letters','assets/letters.json');
 };
 
 WB.PreloadState.create = function() {
