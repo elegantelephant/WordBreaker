@@ -13,7 +13,7 @@ Place letters on the board and find words among them
 
 ### Setting up your firebase API credentials in config-override.js
 
-1. Create the file js/config-override.js
+1. Copy js/config-override.js.sample to js/config-override.js
 2. Add in config json scaffolding like the following:
 ```javascript
 var config = {
