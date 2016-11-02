@@ -85,7 +85,7 @@ WB.GameState.wordCancel = function() {
 
 WB.GameState.getWordScore = function(word) {
     var score = {};
-    score.points = word.text.length * word.text.length;
+    score.points = word.length * word.length;
     score.gold = word.length > 5 ? 1 : 0;
     return score;
 };
