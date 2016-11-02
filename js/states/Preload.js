@@ -11,6 +11,7 @@ WB.PreloadState.preload = function() {
 	// this.load.image('sprite_key', 'location/of/image/file');
     // this.load.image('player', 'assets/images/NN-Player.jpg');
     this.load.image('play_button', 'assets/images/Play.png');
+    this.load.image('shop_button', 'assets/images/Shop_Button.png');
     this.load.image('letter_tile', 'assets/images/Level_Button.png');
 
 	// this.load.spritesheet('spritesheet_key', 'location/of/sheet/file', frameWidth, frameHeight, framesOnSheet, frameMargin, frameSpacing);
