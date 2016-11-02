@@ -62,8 +62,31 @@ Board.addLetter = function(pixX, pixY, x, y) {
 };
 
 Board.clicked = function(button) {
-    button.alpha = 0.7;
-    this.currentWord.text += this.board[button.customParams.x][button.customParams.y].text;
+    var x = button.customParams.x;
+    var y = button.customParams.y;
+    this.selected = this.selected || [
+        [0,0,0,0,0],
+        [0,0,0,0,0],
+        [0,0,0,0,0],
+        [0,0,0,0,0],
+        [0,0,0,0,0],
+        [0,0,0,0,0],
+        [0,0,0,0,0],
+        [0,0,0,0,0],
+        [0,0,0,0,0]
+        ];
+    if (! this.selected[x][y]
+       && (!this.prevx
+         || ((Math.abs(x - this.prevx) < 2
+           && Math.abs(y - this.prevy) < 2))
+         )
+       ) {
+        button.alpha = 0.7;
+        this.prevx = x;
+        this.prevy = y;
+        this.selected[x][y] = 1;
+        this.currentWord.text += this.board[button.customParams.x][button.customParams.y].text;
+    }
 };
 
 Board.generateWordText = function() {
