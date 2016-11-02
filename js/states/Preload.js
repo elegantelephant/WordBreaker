@@ -13,6 +13,7 @@ WB.PreloadState.preload = function() {
     this.load.image('play_button', 'assets/images/Play.png');
     this.load.image('shop_button', 'assets/images/Shop_Button.png');
     this.load.image('letter_tile', 'assets/images/Level_Button.png');
+    this.load.image('submit_button', 'assets/images/Submit_Button.png');
 
     // this.load.spritesheet('spritesheet_key', 'location/of/sheet/file', frameWidth, frameHeight, framesOnSheet, frameMargin, frameSpacing);
     // this.load.spritesheet('player', 'assets/images/PlayerSheet.png', 100, 100, 4, 0, 0);
