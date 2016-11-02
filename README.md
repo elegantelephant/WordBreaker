@@ -40,5 +40,9 @@ var config = {
     }
 };
 ```
-6. Now you should be able to work with firebase via the js/db/* model files!
-7. we got the list of possible words from http://www-personal.umich.edu/~jlawler/wordlist
+7. Back on the firebase console click on *Authentication* in the side nav and choose the *Sign-In Method* tab.
+8. Enaable Email / Password authentication
+9. Now you should be able to work with firebase via the js/db/* model files!
+
+## Notes
+We have the list of possible words from http://www-personal.umich.edu/~jlawler/wordlist
