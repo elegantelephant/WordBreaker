@@ -17,6 +17,7 @@ WB.GameState.init = function() {
 WB.GameState.create = function() {
     this.loadLevel();
     this.SubmitBtn.createSubmitBtn(function() {  });
+    this.CancelBtn.createCancelBtn(function() {  });
     // this.player = this.createCharacter('player', 0, 0, 'right');
     // this.game.physics.arcade.enable(this.player);
     // this.player.body.setSize(60, 60, 0, 0);
