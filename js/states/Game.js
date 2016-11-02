@@ -16,8 +16,8 @@ WB.GameState.init = function() {
 
 WB.GameState.create = function() {
     this.loadLevel();
-    this.SubmitBtn.createSubmitBtn(function() {  });
-    this.CancelBtn.createCancelBtn(function() {  });
+    this.SubmitBtn.createSubmitBtn(this.submitWord);
+    this.CancelBtn.createCancelBtn(this.cancelWord);
     // this.player = this.createCharacter('player', 0, 0, 'right');
     // this.game.physics.arcade.enable(this.player);
     // this.player.body.setSize(60, 60, 0, 0);
@@ -59,9 +59,26 @@ WB.GameState.loadLevel = function() {
     // abstractify the levels to be dynamically generated
     var rows = 8;
     var columns = 9;
-    this.Board.createBoard();
-    this.Score.createScore();
-    this.Gold.createGold();
+    this.Board.create();
+    this.Score.create();
+    this.Gold.create();
+};
+
+WB.wordSubmit = function() {
+    var word = this.Board.currentWord;
+    if (this.isWord(word)) {
+        var score = this.getWordScore(word);
+        this.Score.add = score.points;
+        this.Gold.add = score.gold;
+    }
+    else {
+        this.wordCancel();
+    }
+};
+
+WB.wordCancel = function() {
+    this.Board.deselectAll();
+    this.Board.currentWord.text = '';
 };
 
 WB.GameState.getWordScore = function(word) {
