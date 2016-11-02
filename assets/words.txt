@@ -34579,7 +34579,6 @@ kyphosis
 kyphosus
 kyrgystan
 kyushu
-l
 l-plate
 la
 laager
@@ -69431,7 +69430,6 @@ wyoming
 wyomingite
 wyrd
 wyvern
-x
 x-axis
 x-raying
 xanorphica
