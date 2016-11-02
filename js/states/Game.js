@@ -16,8 +16,8 @@ WB.GameState.init = function() {
 
 WB.GameState.create = function() {
     this.loadLevel();
-    this.SubmitBtn.createSubmitBtn(this.wordSubmit);
-    this.CancelBtn.createCancelBtn(this.wordCancel);
+    this.SubmitBtn.createSubmitBtn(WB.GameState.wordSubmit);
+    this.CancelBtn.createCancelBtn(WB.GameState.wordCancel);
     // this.player = this.createCharacter('player', 0, 0, 'right');
     // this.game.physics.arcade.enable(this.player);
     // this.player.body.setSize(60, 60, 0, 0);
