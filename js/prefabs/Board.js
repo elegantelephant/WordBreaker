@@ -99,6 +99,7 @@ Board.generateWordText = function() {
 
 Board.createLetterPool = function() {
     this.letterDistribution = JSON.parse(WB.game.cache.getText('letters'));
+    //this.letterDistribution = WB.game.cache.getJSON('letters');
     this.letterPool = '';
     for (var l in this.letterDistribution) {
         for (var i = 0; i < this.letterDistribution[l].count; i++) {
