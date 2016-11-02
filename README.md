@@ -41,3 +41,4 @@ var config = {
 };
 ```
 6. Now you should be able to work with firebase via the js/db/* model files!
+7. we got the list of possible words from http://www-personal.umich.edu/~jlawler/wordlist

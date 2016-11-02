@@ -16,6 +16,8 @@ WB.GameState.init = function() {
 
 WB.GameState.create = function() {
     this.loadLevel();
+    this.SubmitBtn.createSubmitBtn(WB.GameState.wordSubmit);
+    this.CancelBtn.createCancelBtn(WB.GameState.wordCancel);
     // this.player = this.createCharacter('player', 0, 0, 'right');
     // this.game.physics.arcade.enable(this.player);
     // this.player.body.setSize(60, 60, 0, 0);
@@ -44,6 +46,11 @@ WB.GameState.create = function() {
 	}, this);
 };
 
+WB.GameState.isWord = function(word) {
+    // O(n) slow lazy scan for now
+    return this.Board.wordsText.indexOf("\n" + word.toLowerCase() + "\n") > 0;
+};
+
 WB.GameState.update = function() {
     // runs many times a second
 };
@@ -52,5 +59,33 @@ WB.GameState.loadLevel = function() {
     // abstractify the levels to be dynamically generated
     var rows = 8;
     var columns = 9;
-    this.Board.createBoard();
+    this.Board.create();
+    this.Score.create();
+    this.Gold.create();
+};
+
+WB.GameState.wordSubmit = function() {
+    var word = WB.GameState.Board.currentWord.text;
+    if (WB.GameState.isWord(word)) {
+        var score = WB.GameState.getWordScore(word);
+        WB.GameState.Score.add(+score.points);
+        WB.GameState.Gold.add(+score.gold);
+        WB.GameState.wordCancel();
+        //TODO remove letter tiles
+    }
+    else {
+        WB.GameState.wordCancel();
+    }
+};
+
+WB.GameState.wordCancel = function() {
+    WB.GameState.Board.deselectAll();
+    WB.GameState.Board.currentWord.text = '';
+};
+
+WB.GameState.getWordScore = function(word) {
+    var score = {};
+    score.points = word.length * word.length;
+    score.gold = word.length > 5 ? 1 : 0;
+    return score;
 };
