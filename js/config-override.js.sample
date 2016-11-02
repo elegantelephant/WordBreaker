@@ -1,0 +1,11 @@
+// Copy this to js/config-override.js and paste in settings from firebase.google.com
+// Initialize Firebase
+var config = {
+  "firebase":{
+    apiKey: "KEY",
+    authDomain: "YOURPROJECT.firebaseapp.com",
+    databaseURL: "https://YOURPROJECT.firebaseio.com",
+    storageBucket: "YOURPROJECT.appspot.com",
+    messagingSenderId: "111111111111",
+  },
+};
