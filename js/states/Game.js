@@ -65,20 +65,22 @@ WB.GameState.loadLevel = function() {
 };
 
 WB.GameState.wordSubmit = function() {
-    var word = this.Board.currentWord;
-    if (this.isWord(word)) {
-        var score = this.getWordScore(word);
-        this.Score.add = score.points;
-        this.Gold.add = score.gold;
+    var word = WB.GameState.Board.currentWord;
+    if (WB.GameState.isWord(word)) {
+        var score = WB.GameState.getWordScore(word);
+        WB.GameState.Score.add(+score.points);
+        WB.GameState.Gold.add(+score.gold);
+        WB.GameState.wordCancel();
+        //TODO remove letter tiles
     }
     else {
-        this.wordCancel();
+        WB.GameState.wordCancel();
     }
 };
 
 WB.GameState.wordCancel = function() {
-    this.Board.deselectAll();
-    this.Board.currentWord.text = '';
+    WB.GameState.Board.deselectAll();
+    WB.GameState.Board.currentWord.text = '';
 };
 
 WB.GameState.getWordScore = function(word) {
