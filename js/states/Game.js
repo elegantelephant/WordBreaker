@@ -48,7 +48,7 @@ WB.GameState.create = function() {
 
 WB.GameState.isWord = function() {
     // O(n) slow lazy scan for now
-    return this.Board.wordsText.indexOf("\n" + this.Board.currentWord.text.toLowerCase + "\n") > 0;
+    return this.Board.wordsText.indexOf("\n" + this.Board.currentWord.text.toLowerCase() + "\n") > 0;
 };
 
 WB.GameState.update = function() {
