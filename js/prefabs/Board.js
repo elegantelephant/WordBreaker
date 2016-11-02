@@ -76,7 +76,7 @@ Board.clicked = function(button) {
     var x = button.customParams.x;
     var y = button.customParams.y;
     if (! this.tiles[x][y].selected
-       && (!this.prevx
+       && (typeof this.prevx === 'undefined'
          || ((Math.abs(x - this.prevx) < 2
            && Math.abs(y - this.prevy) < 2))
          )
