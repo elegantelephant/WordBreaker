@@ -53,8 +53,8 @@ Board.addLetter = function(pixX, pixY, x, y) {
     text.customParams.x = x;
     text.customParams.y = y;
 
-    // TODO do not hard code 'A', but get a good one
-    text.text = 'A';
+    // Choose random letter from pool
+    text.text = this.letterPool.charAt(Math.floor(Math.random() * this.letterPool.length)).toUpperCase();
     text.style.font = 'bold 22pt Arial';
     text.style.fill = '#22f';
     this.texts.add(text);
