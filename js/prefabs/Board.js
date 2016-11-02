@@ -48,7 +48,7 @@ Board.addLetter = function(pixX, pixY, x, y) {
         text = WB.game.add.text(pixX, pixY);
         text.anchor.setTo(0.5);
     }
-    text.customParams = {};yyyyyyyyyyyyyyyyyyyy
+    text.customParams = {};
     text.customParams.x = x;
     text.customParams.y = y;
 
