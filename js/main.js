@@ -1,5 +1,10 @@
 var WB = WB || {};
 
+//setup db models
+var db = new DB();
+db.addModel('player', PlayerModel);
+db.addModel('allPlayers', AllPlayersModel);
+
 //initiate the Phaser framework
 WB.game = new Phaser.Game(360, 640, Phaser.AUTO);
 
