@@ -11,6 +11,7 @@ Board.createBoard = function(level) {
 
     Board.generateGrid(rows, columns);
     Board.generateWordText();
+    Board.createLetterPool();
     WB.game.world.bringToTop(this.texts);
 };
 
@@ -71,6 +72,16 @@ Board.generateWordText = function(letter) {
     this.currentWord.style.font = 'bold 30pt Arial';
     this.currentWord.style.fill = '#2f2';
     this.currentWord.text = '';
+};
+
+Board.createLetterPool = function() {
+    this.letter_distribution = JSON.parse(WB.game.cache.getText('letters'));
+    this.letter_pool = '';
+    for (var l in this.letter_distribution) {
+        for (var i = 0; i < this.letter_distribution[l].count; i++) {
+            this.letter_pool += l;
+        }
+    }
 };
 
 WB.GameState.Board = Board;
