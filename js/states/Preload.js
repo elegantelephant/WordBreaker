@@ -23,6 +23,7 @@ WB.PreloadState.preload = function() {
     // this.load.text('levels', 'assets/data/levels.json');
 
     this.load.text('letters','assets/letters.json');
+    this.load.text('wordsfile','assets/words.txt');
 };
 
 WB.PreloadState.create = function() {
