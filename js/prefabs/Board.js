@@ -12,6 +12,7 @@ Board.createBoard = function(level) {
     Board.createLetterPool();
     Board.generateGrid(rows, columns);
     Board.generateWordText();
+    Board.loadDictionary();
     WB.game.world.bringToTop(this.texts);
 };
 
@@ -106,6 +107,10 @@ Board.createLetterPool = function() {
             this.letterPool += l;
         }
     }
+};
+
+Board.loadDictionary = function() {
+    this.wordsText = WB.game.cache.getText('wordsfile');
 };
 
 WB.GameState.Board = Board;
