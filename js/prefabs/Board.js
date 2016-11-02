@@ -9,9 +9,9 @@ Board.createBoard = function(level) {
     var rows = 9;
     var columns = 5;
 
+    Board.createLetterPool();
     Board.generateGrid(rows, columns);
     Board.generateWordText();
-    Board.createLetterPool();
     WB.game.world.bringToTop(this.texts);
 };
 
