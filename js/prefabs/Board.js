@@ -75,11 +75,11 @@ Board.generateWordText = function() {
 };
 
 Board.createLetterPool = function() {
-    this.letter_distribution = JSON.parse(WB.game.cache.getText('letters'));
-    this.letter_pool = '';
-    for (var l in this.letter_distribution) {
-        for (var i = 0; i < this.letter_distribution[l].count; i++) {
-            this.letter_pool += l;
+    this.letterDistribution = JSON.parse(WB.game.cache.getText('letters'));
+    this.letterPool = '';
+    for (var l in this.letterDistribution) {
+        for (var i = 0; i < this.letterDistribution[l].count; i++) {
+            this.letterPool += l;
         }
     }
 };
