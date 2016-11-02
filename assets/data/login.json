@@ -1,0 +1,40 @@
+{
+    "email": {
+        "position": {"x": 0.5, "y": 0.4},
+        "properties": {
+            "texture": "input_box_image",
+            "group": "player_inputs",
+            "text_properties": {
+                "text": "",
+                "style": {
+                    "font": "32px Arial",
+                    "fill": "#000",
+                    "align": "left"
+                },
+                "anchor": {"x": 0, "y": 0.5}
+            },
+            "anchor": {"x": 0.5, "y": 0.5},
+            "scale": {"x": 0.75, "y": 0.075},
+            "text_offset": {"x": 0.1, "y": 0}
+        }
+    },
+    "password": {
+        "position": {"x": 0.5, "y": 0.6},
+        "properties": {
+            "texture": "input_box_image",
+            "group": "player_inputs",
+            "text_properties": {
+                "text": "",
+                "style": {
+                    "font": "32px Arial",
+                    "fill": "#000",
+                    "align": "left"
+                },
+                "anchor": {"x": 0, "y": 0.5}
+            },
+            "anchor": {"x": 0.5, "y": 0.5},
+            "scale": {"x": 0.75, "y": 0.075},
+            "text_offset": {"x": 0.1, "y": 0}
+        }
+    }
+}
