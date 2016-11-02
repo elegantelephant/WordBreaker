@@ -4,23 +4,37 @@ WB.GameState = WB.GameState || {};
 var Score = {};
 var Gold = {};
 
-Score.createScore = function() {
-    this.SCORE = this.SCORE || 0;
-    var x_cord = WB.game.world.width - 10;
-    text = WB.game.add.text(x_cord, 0);
-    text.anchor.setTo(1,0);
-    text.text = this.SCORE;
-    text.style.font = 'bold 20pt Arial';
-    text.style.fill = "#fff";
+Score.create = function() {
+    this.Score = WB.game.add.text(WB.game.world.width - 10, 0);
+    this.Score.anchor.setTo(1,0);
+    this.Score.text = 0;
+    this.Score.style.font = 'bold 20pt Arial';
+    this.Score.style.fill = "#fff";
+    this.Score.text = 0;
 };
 
-Gold.createGold = function() {
-    this.Gold = this.Gold || 0; //Change to get Gold from Firebase as it should be available between sessions
-    text = WB.game.add.text(10, 0);
-    text.text = this.Gold;
-    text.style.font = 'bold 20pt Arial';
-    text.style.fill = "#FFD700";
+Score.add = function(scoreadd) {
+    this.Score.text = +this.Score.text + scoreadd;
+}
+
+Score.reset = function() {
+    this.Score.text = 0;
+}
+
+Gold.create = function() {
+    this.Gold = WB.game.add.text(10, 0);
+    this.Gold.text = 0;
+    this.Gold.style.font = 'bold 20pt Arial';
+    this.Gold.style.fill = "#FFD700";
 };
+
+Gold.add = function(goldadd) {
+    this.Gold.text = +this.Gold.text + goldadd;
+}
+
+Gold.reset = function() {
+    this.Gold.text = 0;
+}
 
 WB.GameState.Score = Score;
 WB.GameState.Gold = Gold;

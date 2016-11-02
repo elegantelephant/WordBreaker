@@ -3,7 +3,7 @@ WB.GameState = WB.GameState || {};
 
 var Board = {};
 
-Board.createBoard = function(level) {
+Board.create = function(level) {
     this.SIZEX = WB.game.world.width;
     this.SIZEY = WB.game.world.height;
     var rows = 9;
