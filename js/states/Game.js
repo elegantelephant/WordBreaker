@@ -65,7 +65,7 @@ WB.GameState.loadLevel = function() {
 };
 
 WB.GameState.wordSubmit = function() {
-    var word = WB.GameState.Board.currentWord;
+    var word = WB.GameState.Board.currentWord.text;
     if (WB.GameState.isWord(word)) {
         var score = WB.GameState.getWordScore(word);
         WB.GameState.Score.add(+score.points);
