@@ -90,7 +90,6 @@ Board.clicked = function(button) {
 };
 
 Board.deselectAll = function() {
-    console.log("deselectAll");
     for (var col=0; col < this.columns; col++) {
         for (var row=0; row < this.rows; row++) {
             this.tiles[col][row].tile.alpha = 1.0;
