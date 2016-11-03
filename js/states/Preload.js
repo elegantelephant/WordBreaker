@@ -26,8 +26,8 @@ WB.PreloadState.preload = function() {
 	// this.load.text('text_key', 'location/of/text/file');
     // this.load.text('levels', 'assets/data/levels.json');
     this.load.json('login_data', 'assets/data/login.json');
-    this.load.text('letters','assets/letters.json');
-    this.load.text('wordsfile','assets/words.txt');
+    this.load.text('letters','assets/data/letters.json');
+    this.load.text('wordsfile','assets/data/words.txt');
 };
 
 WB.PreloadState.loadComplete = function() {
