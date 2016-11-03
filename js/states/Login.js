@@ -21,17 +21,6 @@ WB.LoginState.init = function() {
     }).bind(this));
 };
 
-WB.LoginState.preload = function() {
-    // load assets
-};
-
-WB.LoginState.create = function() {
-};
-
-WB.LoginState.startGameState = function() {
-};
-
-
 WB.LoginState.attempt_login = function () {
     "use strict";
     var email    = this.prefabs["email"].val();
