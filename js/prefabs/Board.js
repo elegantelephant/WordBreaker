@@ -15,7 +15,7 @@ Board.create = function(level) {
         this.board[col] = Array(this.rows);
         for (var row = 0; row < this.rows; row ++) {
             this.board[col][row] = {};
-            this.board[col][row].selected = 0;
+            this.board[col][row].selected = false;
         }
     }
 
@@ -80,7 +80,7 @@ Board.clicked = function(button) {
         button.alpha = 0.7;
         this.prevx = x;
         this.prevy = y;
-        this.board[x][y].selected = 1;
+        this.board[x][y].selected = true;
         this.currentWord.text += this.board[button.gridx][button.gridy].text.text;
     }
 };
@@ -89,12 +89,24 @@ Board.deselectAll = function() {
     for (var col=0; col < this.columns; col++) {
         for (var row=0; row < this.rows; row++) {
             this.board[col][row].tile.alpha = 1.0;
-            this.board[col][row].selected = 0;
+            this.board[col][row].selected = false;
         }
     }
     delete this.prevx;
     delete this.prevy;
 }
+
+Board.killSelectedLetters = function() {
+    for (var col=0; col < this.columns; col++) {
+        for (var row=0; row < this.rows; row++) {
+            if (this.board[col][row].selected) {
+                this.board[col][row].text.kill();
+                this.board[col][row].tile.kill();
+                this.board[col][row].selected = false;
+            }
+        }
+    }
+};
 
 Board.generateWordText = function() {
     this.currentWord = WB.game.add.text(this.SIZEX/2, 70);

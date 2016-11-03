@@ -70,8 +70,8 @@ WB.GameState.wordSubmit = function() {
         var score = WB.GameState.getWordScore(word);
         WB.GameState.Score.add(+score.points);
         WB.GameState.Gold.add(+score.gold);
+        WB.GameState.Board.killSelectedLetters();
         WB.GameState.wordCancel();
-        //TODO remove letter tiles
     }
     else {
         WB.GameState.wordCancel();
