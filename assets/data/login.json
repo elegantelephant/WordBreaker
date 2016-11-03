@@ -15,7 +15,7 @@
             },
             "anchor": {"x": 0.5, "y": 0.5},
             "scale": {"x": 0.75, "y": 0.075},
-            "text_offset": {"x": 0.1, "y": 0}
+            "text_offset": {"x": 0.05, "y": 0}
         }
     },
     "password": {
@@ -34,7 +34,7 @@
             },
             "anchor": {"x": 0.5, "y": 0.5},
             "scale": {"x": 0.75, "y": 0.075},
-            "text_offset": {"x": 0.1, "y": 0}
+            "text_offset": {"x": 0.05, "y": 0}
         }
     }
 }

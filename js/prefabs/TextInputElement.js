@@ -59,14 +59,14 @@ WB.TextInputElement.prototype.onSelect = function () {
     this.game_state.game.add.existing(this.text_input);
 
     // blow away keyboard input events and replace with ours since we are selected
-    this.game_state.game.input.keyboard.addCallbacks(this, null, null, this.onInput);
+    this.game_state.game.input.keyboard.addCallbacks(this, null, this.onInput, null);
 };
 
-WB.TextInputElement.prototype.onInput = function(char) {
+WB.TextInputElement.prototype.onInput = function(ev) {
     "use strict";
-    this.game_state.game.input.keyboard.event.preventDefault();
 
-    var keycode = this.game_state.game.input.keyboard.lastKey.keyCode;
+    var char    = ev.key;
+    var keycode = ev.keyCode;
 
     this.onKeyPress.dispatch({ "char": char, "keycode": keycode });
 
@@ -74,13 +74,13 @@ WB.TextInputElement.prototype.onInput = function(char) {
         this.text_input.text += char;
     }
     else {
-        switch (this.game_state.game.input.keyboard.lastKey.keyCode) {
+        switch (keycode) {
             case Phaser.KeyCode.ENTER:
                 this.onEnter.dispatch();
                 break;
 
             case Phaser.KeyCode.BACKSPACE:
-                this.text_input.text = this.text_input.text.substring(0,-1);
+                this.text_input.text = this.text_input.text.substring(0,this.text_input.text.length - 1);
                 break;
         }
     }
