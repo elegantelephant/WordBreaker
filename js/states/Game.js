@@ -57,9 +57,11 @@ WB.GameState.update = function() {
 
 WB.GameState.loadLevel = function() {
     // abstractify the levels to be dynamically generated
-    var rows = 8;
-    var columns = 9;
-    this.Board.create();
+    var rows = 9;
+    var columns = 5;
+    // TODO make this 'level' variable smarter
+    var level = 1;
+    this.Board.create(rows, columns, level);
     this.Score.create();
     this.Gold.create();
 };
@@ -71,6 +73,7 @@ WB.GameState.wordSubmit = function() {
         WB.GameState.Score.add(+score.points);
         WB.GameState.Gold.add(+score.gold);
         WB.GameState.Board.killSelectedLetters();
+        WB.GameState.Board.letterFall();
         WB.GameState.wordCancel();
     }
     else {

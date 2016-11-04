@@ -3,11 +3,11 @@ WB.GameState = WB.GameState || {};
 
 var Board = {};
 
-Board.create = function(level) {
+Board.create = function(rows, columns, level) {
     this.SIZEX = WB.game.world.width;
     this.SIZEY = WB.game.world.height;
-    this.rows = 9;
-    this.columns = 5;
+    this.rows = rows;
+    this.columns = columns;
 
     // create and initialize the tiles structure
     this.board = Array(this.columns);
@@ -19,10 +19,10 @@ Board.create = function(level) {
         }
     }
 
-    Board.createLetterPool();
-    Board.generateGrid(this.rows, this.columns);
-    Board.generateWordText();
-    Board.loadDictionary();
+    this.createLetterPool();
+    this.generateGrid(rows, columns);
+    this.generateWordText();
+    this.loadDictionary();
     WB.game.world.bringToTop(this.texts);
 };
 
@@ -37,8 +37,8 @@ Board.generateGrid = function(rows, cols) {
             pixel_x = (x + 1.5) * this.tileSize;
             pixel_y = (this.SIZEY) - (y + 1.5) * this.tileSize;
 
-            Board.addTile(pixel_x, pixel_y, x, y);
-            Board.addLetter(pixel_x, pixel_y, x, y);
+            this.addTile(pixel_x, pixel_y, x, y);
+            this.addLetter(pixel_x, pixel_y, x, y);
         }
     }
 };
@@ -106,6 +106,20 @@ Board.killSelectedLetters = function() {
             }
         }
     }
+};
+
+Board.letterFall = function() {
+    var self = this;
+    self.board.forEach(function(columnVal, column) {
+        console.log(column);
+        self.board[column].forEach(function(rowVal, row) {
+    // scan from the bottom, row by row, searching for an empty slot
+    // Once I find one, scan straight up for the lowest tile and slap it in
+    // change the location immediately, regardless of how long the animation takes
+            console.log("[" + self.board[column][row].tile.gridx + "][" 
+                   + self.board[column][row].tile.gridy + "]");
+        });
+    }); 
 };
 
 Board.generateWordText = function() {
