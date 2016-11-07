@@ -27,6 +27,8 @@ Board.create = function(rows, columns, level) {
 };
 
 Board.generateGrid = function(rows, cols) {
+    // WARNING: I am amaking this start from (0, 0)
+    // being the BOTTOM left corner for my brain's sake
     var index = 0;
     var pixel_x;
     var pixel_y;
@@ -110,16 +112,34 @@ Board.killSelectedLetters = function() {
 
 Board.letterFall = function() {
     var self = this;
-    self.board.forEach(function(columnVal, column) {
-        console.log(column);
-        self.board[column].forEach(function(rowVal, row) {
+    self.board.forEach(function(column, columnIndex) {
+        column.forEach(function(row, rowIndex) {
     // scan from the bottom, row by row, searching for an empty slot
     // Once I find one, scan straight up for the lowest tile and slap it in
     // change the location immediately, regardless of how long the animation takes
-            console.log("[" + self.board[column][row].tile.gridx + "][" 
-                   + self.board[column][row].tile.gridy + "]");
+            if (!row.tile._exists) {
+                self.dropAbove(columnIndex, rowIndex);    
+            }
         });
     }); 
+};
+
+Board.dropAbove = function(x, y) {
+    var colToDrop = this.findAboveTiles(x, y);
+    if (colToDrop) { 
+        // console.log("how many will fall? " + colToDrop.length); 
+    }
+};
+
+Board.findAboveTiles = function(x, y) {
+    var floating = [];
+    console.log('x: ' + x + ', y: ' + y);
+    for (var pos=y + 1; pos < this.rows; pos++) {
+        if (this.board[x][pos].tile._exists) {
+            floating.push(this.board[x][pos]);
+        }
+    }
+    return floating;
 };
 
 Board.generateWordText = function() {
