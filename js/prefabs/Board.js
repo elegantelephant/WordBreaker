@@ -30,19 +30,22 @@ Board.generateGrid = function(rows, cols) {
     // WARNING: I am amaking this start from (0, 0)
     // being the BOTTOM left corner for my brain's sake
     var index = 0;
-    var pixel_x;
-    var pixel_y;
+    var pixels = [];
     this.tileSize = Math.floor(this.SIZEX / 8);
     this.texts = WB.game.add.group();
     for (var x = 0; x < cols; x++) {
         for (var y = 0; y < rows; y++) {
-            pixel_x = (x + 1.5) * this.tileSize;
-            pixel_y = (this.SIZEY) - (y + 1.5) * this.tileSize;
-
-            this.addTile(pixel_x, pixel_y, x, y);
-            this.addLetter(pixel_x, pixel_y, x, y);
+            pixels = this.getPixelFromGrid(x, y);
+            this.addTile(pixels[0], pixels[1], x, y);
+            this.addLetter(pixels[0], pixels[1], x, y);
         }
     }
+};
+
+Board.getPixelFromGrid = function(gridX, gridY) {
+    var x = (gridX + 1.5) * this.tileSize;
+    var y = (this.SIZEY) - (gridY + 1.5) * this.tileSize;
+    return [x, y];
 };
 
 Board.addTile = function(pixX, pixY, x, y) {
@@ -52,7 +55,6 @@ Board.addTile = function(pixX, pixY, x, y) {
     tile.gridx = x;
     tile.gridy = y;
     this.board[x][y].tile = tile;
-    
 };
 
 Board.addLetter = function(pixX, pixY, x, y) {
@@ -90,8 +92,10 @@ Board.clicked = function(button) {
 Board.deselectAll = function() {
     for (var col=0; col < this.columns; col++) {
         for (var row=0; row < this.rows; row++) {
-            this.board[col][row].tile.alpha = 1.0;
-            this.board[col][row].selected = false;
+            if (typeof(this.board[col][row].tile) !== 'undefined') {
+                this.board[col][row].tile.alpha = 1.0;
+                this.board[col][row].selected = false;
+            }
         }
     }
     delete this.prevx;
@@ -112,30 +116,44 @@ Board.killSelectedLetters = function() {
 
 Board.letterFall = function() {
     var self = this;
-    self.board.forEach(function(column, columnIndex) {
-        column.forEach(function(row, rowIndex) {
-    // scan from the bottom, row by row, searching for an empty slot
-    // Once I find one, scan straight up for the lowest tile and slap it in
-    // change the location immediately, regardless of how long the animation takes
-            if (!row.tile._exists) {
-                self.dropAbove(columnIndex, rowIndex);    
+
+    self.board.forEach(function(column, x) {
+        for (y = 0; y < column.length; y++) {
+            if (typeof(column[y].tile) == 'undefined'
+                || !column[y].tile._exists) {
+                self.dropAbove(x, y);
+                break;
             }
-        });
+        }
     }); 
 };
 
 Board.dropAbove = function(x, y) {
     var colToDrop = this.findAboveTiles(x, y);
-    if (colToDrop) { 
-        // console.log("how many will fall? " + colToDrop.length); 
+    var pixels= [];
+
+    if (colToDrop.length) {
+        colToDrop.forEach(function(unit, index) {
+            unit.tile.gridx = x;
+            unit.tile.gridy = y + index;
+            pixels = this.getPixelFromGrid(x, y + index);
+            unit.tile.x = unit.text.x = pixels[0];
+            unit.tile.y = unit.text.y = pixels[1];
+            this.board[x][y+index] = unit; 
+            // tween it down
+        }, this);
+        //TODO find a way to kill the spots created by falling letters
+        for (h = y + colToDrop.length; h < this.board[x].length; h++) {
+            this.board[x][h] = {};
+        }
     }
 };
 
 Board.findAboveTiles = function(x, y) {
     var floating = [];
-    console.log('x: ' + x + ', y: ' + y);
     for (var pos=y + 1; pos < this.rows; pos++) {
-        if (this.board[x][pos].tile._exists) {
+        if (typeof(this.board[x][pos].tile) !== 'undefined' 
+                && this.board[x][pos].tile._exists) {
             floating.push(this.board[x][pos]);
         }
     }
