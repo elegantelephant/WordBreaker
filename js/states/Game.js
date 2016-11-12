@@ -75,6 +75,7 @@ WB.GameState.wordSubmit = function() {
         WB.GameState.Board.killSelectedLetters();
         WB.GameState.Board.letterFall();
         WB.GameState.wordCancel();
+        WB.GameState.Board.newPiece(2, 8);
     }
     else {
         WB.GameState.wordCancel();

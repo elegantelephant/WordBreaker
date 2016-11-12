@@ -23,21 +23,18 @@ Board.create = function(rows, columns, level) {
     this.generateGrid(rows, columns);
     this.generateWordText();
     this.loadDictionary();
-    WB.game.world.bringToTop(this.texts);
+    // WB.game.world.bringToTop(this.texts);
 };
 
 Board.generateGrid = function(rows, cols) {
     // WARNING: I am amaking this start from (0, 0)
     // being the BOTTOM left corner for my brain's sake
     var index = 0;
-    var pixels = [];
     this.tileSize = Math.floor(this.SIZEX / 8);
     this.texts = WB.game.add.group();
     for (var x = 0; x < cols; x++) {
-        for (var y = 0; y < rows; y++) {
-            pixels = this.getPixelFromGrid(x, y);
-            this.addTile(pixels[0], pixels[1], x, y);
-            this.addLetter(pixels[0], pixels[1], x, y);
+        for (var y = 0; y < rows - 2; y++) {
+            this.addTile(x, y);
         }
     }
 };
@@ -48,13 +45,16 @@ Board.getPixelFromGrid = function(gridX, gridY) {
     return [x, y];
 };
 
-Board.addTile = function(pixX, pixY, x, y) {
-    tile = WB.game.add.button(pixX, pixY, 'letter_tile', Board.clicked, this);
+Board.addTile = function(x, y) {
+    var pix = [];
+    pix = this.getPixelFromGrid(x, y);
+    tile = WB.game.add.button(pix[0], pix[1], 'letter_tile', Board.clicked, this);
     tile.scale.setTo(this.tileSize / tile.width);
     tile.anchor.setTo(0.5);
     tile.gridx = x;
     tile.gridy = y;
     this.board[x][y].tile = tile;
+    this.addLetter(pix[0], pix[1], x, y);
 };
 
 Board.addLetter = function(pixX, pixY, x, y) {
@@ -63,13 +63,29 @@ Board.addLetter = function(pixX, pixY, x, y) {
         text = WB.game.add.text(pixX, pixY);
         text.anchor.setTo(0.5);
     }
-
+    else {
+        text.reset(pixX, pixY);
+    }
     // Choose random letter from pool
-    text.text = this.letterPool.charAt(Math.floor(Math.random() * this.letterPool.length)).toUpperCase();
+    text.text = this.getRandomLetter();
     text.style.font = 'bold 22pt Arial';
     text.style.fill = '#22f';
     this.texts.add(text);
     this.board[x][y].text = text;
+    WB.game.world.bringToTop(this.texts);
+
+};
+
+Board.getRandomLetter = function() {
+    var randomNumber = Math.floor(Math.random() * this.letterPool.length);
+    var letter = this.letterPool.charAt(randomNumber).toUpperCase();
+    return letter;
+};
+
+Board.newPiece = function(gridx, gridy) {
+    // just one tile for now, will make 4's later
+    var pixels = this.getPixelFromGrid(gridx, gridy);
+    WB.GameState.Board.addTile(gridx, gridy);
 };
 
 Board.clicked = function(button) {
