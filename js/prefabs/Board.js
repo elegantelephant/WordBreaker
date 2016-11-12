@@ -43,7 +43,7 @@ Board.generateGrid = function(rows, cols) {
 };
 
 Board.getPixelFromGrid = function(gridX, gridY) {
-    var x = (gridX + 1.5) * this.tileSize;
+    var x = (gridX + 2) * this.tileSize;
     var y = (this.SIZEY) - (gridY + 1.5) * this.tileSize;
     return [x, y];
 };
@@ -161,7 +161,7 @@ Board.findAboveTiles = function(x, y) {
 };
 
 Board.generateWordText = function() {
-    this.currentWord = WB.game.add.text(this.SIZEX/2, 70);
+    this.currentWord = WB.game.add.text(this.SIZEX/2, this.SIZEY/12);
     this.currentWord.anchor.setTo(0.5);
     this.currentWord.style.font = 'bold 30pt Arial';
     this.currentWord.style.fill = '#2f2';
