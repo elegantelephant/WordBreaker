@@ -41,6 +41,31 @@ WB.GameState.create = function() {
 			// console.log("tapped");
 		}
 		else if (click_release.direction) {
+            if (WB.GameState.newTileDrop) {
+                if (click_release.direction == 'left') {
+                    // shift the new piece to the left
+                    var pieceArray = WB.GameState.Board.findNewPiece();
+                    pieceArray.forEach(function(unit) {
+                        WB.GameState.Piece.move(unit, {x: unit.tile.gridx - 1, y: unit.tile.gridy});
+                    });
+                }
+                if (click_release.direction == 'right') {
+                    // shift the new piece to the right
+                    var pieceArray = WB.GameState.Board.findNewPiece();
+                    pieceArray.forEach(function(unit) {
+                        WB.GameState.Piece.move(unit, {x: unit.tile.gridx + 1, y: unit.tile.gridy});
+                    });
+                }
+                if (click_release.direction == 'down') {
+                    // drop the new piece
+                    WB.GameState.Board.letterFall();
+                }
+                if (click_release.direction == 'up') {
+                    // Rotate the new piece
+                    WB.GameState.Piece.rotate();
+                    console.log("rotating");
+                }
+            }
 			// console.log("swiped " + click_release.direction);
 		}
 	}, this);

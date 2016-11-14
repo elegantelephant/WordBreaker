@@ -86,11 +86,31 @@ Board.newPiece = function(gridx, gridy) {
     // just one tile for now, will make 4's later
     var pixels = this.getPixelFromGrid(gridx, gridy);
     WB.GameState.Board.addTile(gridx, gridy);
+    WB.GameState.Board.board[gridx][gridy].newPiece = true;
+    WB.GameState.newTileDrop = true;
+};
+
+Board.findNewPiece = function() {
+    var wholePiece = [];
+    for (var col=0; col < this.columns; col++) {
+        for (var row=0; row < this.rows; row++) {
+            if (typeof(this.board[col][row].tile) !== 'undefined'
+                   && this.board[col][row].newPiece) {
+                wholePiece.push(this.board[col][row]);
+            }
+        }
+    }
+    return wholePiece;
 };
 
 Board.clicked = function(button) {
     var x = button.gridx;
     var y = button.gridy;
+
+    // move the new piece around if that is where you clicked
+    if (WB.GameState.newTileDrop) {
+        return;
+    }
     if (! this.board[x][y].selected
        && (typeof this.prevx === 'undefined'
          || ((Math.abs(x - this.prevx) < 2
@@ -111,6 +131,8 @@ Board.deselectAll = function() {
             if (typeof(this.board[col][row].tile) !== 'undefined') {
                 this.board[col][row].tile.alpha = 1.0;
                 this.board[col][row].selected = false;
+        // SLOPPY: the newpiece remains the new piece until the next word submission
+                this.board[col][row].newPiece = false;
             }
         }
     }
@@ -142,26 +164,16 @@ Board.letterFall = function() {
             }
         }
     }); 
+    WB.GameState.newTileDrop = false;
 };
 
 Board.dropAbove = function(x, y) {
     var colToDrop = this.findAboveTiles(x, y);
-    var pixels= [];
 
     if (colToDrop.length) {
         colToDrop.forEach(function(unit, index) {
-            unit.tile.gridx = x;
-            unit.tile.gridy = y + index;
-            pixels = this.getPixelFromGrid(x, y + index);
-            unit.tile.x = unit.text.x = pixels[0];
-            unit.tile.y = unit.text.y = pixels[1];
-            this.board[x][y+index] = unit; 
-            // tween it down
+            WB.GameState.Piece.move(unit, {x: x, y: y + index});
         }, this);
-        //TODO find a way to kill the spots created by falling letters
-        for (h = y + colToDrop.length; h < this.board[x].length; h++) {
-            this.board[x][h] = {};
-        }
     }
 };
 
