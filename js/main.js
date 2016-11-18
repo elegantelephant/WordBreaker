@@ -7,15 +7,16 @@ db.addModel('allPlayers', AllPlayersModel);
 
 //initiate the Phaser framework
 WB.game = new Phaser.Game(360, 640, Phaser.AUTO);
+Phaser.Device.whenReady(function () {
+    // plugins
+    WB.game.plugin = WB.game.plugin || {};
+    WB.game.plugin.inputField = WB.game.plugins.add(Fabrique.Plugins.InputField);
 
-// plugins
-WB.game.plugin = WB.game.plugin || {};
-WB.game.plugin.inputField = WB.game.plugins.add(Fabrique.Plugins.InputField);
-
-WB.game.state.add('BootState', WB.BootState);
-WB.game.state.add('PreloadState', WB.PreloadState);
-WB.game.state.add('LoginState', WB.LoginState);
-WB.game.state.add('HomeState', WB.HomeState);
-WB.game.state.add('ShopState', WB.ShopState);
-WB.game.state.add('GameState', WB.GameState);
-WB.game.state.start('BootState');
+    WB.game.state.add('BootState', WB.BootState);
+    WB.game.state.add('PreloadState', WB.PreloadState);
+    WB.game.state.add('LoginState', WB.LoginState);
+    WB.game.state.add('HomeState', WB.HomeState);
+    WB.game.state.add('ShopState', WB.ShopState);
+    WB.game.state.add('GameState', WB.GameState);
+    WB.game.state.start('BootState');
+});

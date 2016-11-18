@@ -14,6 +14,7 @@ app.set("port", port);
 
 //setup static files
 app.use('/js', express.static(path.join(__dirname, "../js")));
+app.use('/vendor', express.static(path.join(__dirname, "../vendor")));
 app.use('/assets', express.static(path.join(__dirname, "../assets")));
 
 //setup routing
