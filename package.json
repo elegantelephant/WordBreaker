@@ -24,5 +24,8 @@
     "gulp": "^3.9.1",
     "gulp-nodemon": "^2.1.0",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "phaser-input": "^1.2.6"
   }
 }

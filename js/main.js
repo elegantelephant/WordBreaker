@@ -8,6 +8,10 @@ db.addModel('allPlayers', AllPlayersModel);
 //initiate the Phaser framework
 WB.game = new Phaser.Game(360, 640, Phaser.AUTO);
 
+// plugins
+WB.game.plugin = WB.game.plugin || {};
+WB.game.plugin.inputField = WB.game.plugins.add(Fabrique.Plugins.InputField);
+
 WB.game.state.add('BootState', WB.BootState);
 WB.game.state.add('PreloadState', WB.PreloadState);
 WB.game.state.add('LoginState', WB.LoginState);
