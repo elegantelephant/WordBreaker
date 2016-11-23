@@ -31,8 +31,9 @@ WB.PreloadState.preload = function() {
 };
 
 WB.PreloadState.loadComplete = function() {
-    this.game.time.events.add(Phaser.Timer.SECOND, function() {
-    //this.game.time.events.add(Phaser.Timer.SECOND * 3, function() {
-        this.state.start('HomeState');
+    //this.game.time.events.add(Phaser.Timer.SECOND, function() {
+    this.game.time.events.add(Phaser.Timer.SECOND * 3, function() {
+    //    this.state.start('LoginState');
+        this.game.state.start("HomeState");
     }, this);
 };

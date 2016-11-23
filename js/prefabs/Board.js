@@ -82,13 +82,65 @@ Board.getRandomLetter = function() {
     return letter;
 };
 
-Board.newPiece = function(gridx, gridy) {
-    // just one tile for now, will make 4's later
+Board.newPiece = function() {
+    // Place tile 1
+    var gridx = Math.floor(this.columns / 2) - 1;
+    var gridy = this.rows - 1;
     var pixels = this.getPixelFromGrid(gridx, gridy);
     WB.GameState.Board.addTile(gridx, gridy);
     WB.GameState.Board.board[gridx][gridy].newPiece = true;
+
+    // Place tile 2
+    var gridLoc = this.newLocation(gridx, gridy);
+    pixels = this.getPixelFromGrid(gridLoc.x, gridLoc.y);
+    WB.GameState.Board.addTile(gridLoc.x, gridLoc.y);
+    WB.GameState.Board.board[gridLoc.x][gridLoc.y].newPiece = true;
+
+    // Place tile 3
+    gridLoc = this.newLocation(gridLoc.x, gridLoc.y, gridLoc.dir);
+    pixels = this.getPixelFromGrid(gridLoc.x, gridLoc.y);
+    WB.GameState.Board.addTile(gridLoc.x, gridLoc.y);
+    WB.GameState.Board.board[gridLoc.x][gridLoc.y].newPiece = true;
+
+    // Place tile 4
+    gridLoc = this.newLocation(gridLoc.x, gridLoc.y, gridLoc.dir);
+    pixels = this.getPixelFromGrid(gridLoc.x, gridLoc.y);
+    WB.GameState.Board.addTile(gridLoc.x, gridLoc.y);
+    WB.GameState.Board.board[gridLoc.x][gridLoc.y].newPiece = true;
+
     WB.GameState.newTileDrop = true;
 };
+
+Board.newLocation = function(x, y, lastDir) {
+    var directions;
+    var newDir = false;
+    console.log(typeof(lastDir));
+    console.log(lastDir);
+    if (typeof(lastDir) === 'undefined') {
+        console.log(1);
+        newDir = 'right';
+    }
+    else if (lastDir == 'right') {
+        console.log(2);
+        directions = ['down', 'right'];
+    }
+    else if (lastDir == 'down') {
+        console.log(3);
+        directions = ['down', 'right', 'left'];
+    }
+    else if (lastDir == 'left') {
+        console.log(4);
+        directions = ['down', 'left'];
+    }
+    console.log('directions: ' + directions);
+    newDir = newDir || library.choose(directions);
+    newDir == 'down' ? y--
+        : newDir == 'up' ? y++
+        : newDir == 'left' ? x--
+        : newDir == 'right' ? x++
+        : console.log("I have no idea which direction that is [" + newDir + "]");
+    return {x: x, y: y, dir: newDir};
+}
 
 Board.findNewPiece = function() {
     var wholePiece = [];
