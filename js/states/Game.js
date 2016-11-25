@@ -42,19 +42,25 @@ WB.GameState.create = function() {
 		}
 		else if (click_release.direction) {
             if (WB.GameState.newTileDrop) {
+                var pieceArray;
                 if (click_release.direction == 'left') {
                     // shift the new piece to the left
-                    var pieceArray = WB.GameState.Board.findNewPiece();
-                    pieceArray.forEach(function(unit) {
-                        WB.GameState.Piece.move(unit, {x: unit.tile.gridx - 1, y: unit.tile.gridy});
-                    });
+                    pieceArray = WB.GameState.Board.findNewPiece();
+                    if (pieceArray[0].tile.gridx > 0) {
+                        pieceArray.forEach(function(unit) {
+                            WB.GameState.Piece.move(unit, {x: unit.tile.gridx - 1, y: unit.tile.gridy});
+                        });
+                    }
                 }
                 if (click_release.direction == 'right') {
                     // shift the new piece to the right
-                    var pieceArray = WB.GameState.Board.findNewPiece();
-                    pieceArray.forEach(function(unit) {
-                        WB.GameState.Piece.move(unit, {x: unit.tile.gridx + 1, y: unit.tile.gridy});
-                    });
+                    pieceArray = WB.GameState.Board.findNewPiece();
+                    pieceArray.reverse();
+                    if (pieceArray[0].tile.gridx < 4) {
+                        pieceArray.forEach(function(unit) {
+                            WB.GameState.Piece.move(unit, {x: unit.tile.gridx + 1, y: unit.tile.gridy});
+                        });
+                    }
                 }
                 if (click_release.direction == 'down') {
                     // drop the new piece

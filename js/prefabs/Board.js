@@ -33,7 +33,7 @@ Board.generateGrid = function(rows, cols) {
     this.tileSize = Math.floor(this.SIZEX / 8);
     this.texts = WB.game.add.group();
     for (var x = 0; x < cols; x++) {
-        for (var y = 0; y < rows - 2; y++) {
+        for (var y = 0; y < rows - 3; y++) {
             this.addTile(x, y);
         }
     }
@@ -114,25 +114,18 @@ Board.newPiece = function() {
 Board.newLocation = function(x, y, lastDir) {
     var directions;
     var newDir = false;
-    console.log(typeof(lastDir));
-    console.log(lastDir);
     if (typeof(lastDir) === 'undefined') {
-        console.log(1);
         newDir = 'right';
     }
     else if (lastDir == 'right') {
-        console.log(2);
         directions = ['down', 'right'];
     }
     else if (lastDir == 'down') {
-        console.log(3);
         directions = ['down', 'right', 'left'];
     }
     else if (lastDir == 'left') {
-        console.log(4);
         directions = ['down', 'left'];
     }
-    console.log('directions: ' + directions);
     newDir = newDir || library.choose(directions);
     newDir == 'down' ? y--
         : newDir == 'up' ? y++
