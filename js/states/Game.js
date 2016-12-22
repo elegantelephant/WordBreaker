@@ -56,7 +56,7 @@ WB.GameState.create = function() {
                     // shift the new piece to the right
                     pieceArray = WB.GameState.Board.findNewPiece();
                     pieceArray.reverse();
-                    if (pieceArray[0].tile.gridx < 4) {
+                    if (pieceArray[0].tile.gridx < this.columns - 1) {
                         pieceArray.forEach(function(unit) {
                             WB.GameState.Piece.move(unit, {x: unit.tile.gridx + 1, y: unit.tile.gridy});
                         });
@@ -88,11 +88,12 @@ WB.GameState.update = function() {
 
 WB.GameState.loadLevel = function() {
     // abstractify the levels to be dynamically generated
-    var rows = 9;
-    var columns = 5;
+    this.rows = 12;
+    this.columns = 6;
     // TODO make this 'level' variable smarter
     var level = 1;
-    this.Board.create(rows, columns, level);
+    var goldenTiles = [[2, 2], [2, 3]];
+    this.Board.create(this.rows, this.columns, level, goldenTiles);
     this.Score.create();
     this.Gold.create();
 };
@@ -106,11 +107,37 @@ WB.GameState.wordSubmit = function() {
         WB.GameState.Board.killSelectedLetters();
         WB.GameState.Board.letterFall();
         WB.GameState.wordCancel();
+        WB.GameState.checkWin();
         WB.GameState.Board.newPiece();
     }
     else {
         WB.GameState.wordCancel();
     }
+};
+
+WB.GameState.checkLose = function() {
+    var loseRow = this.rows - 3;
+    for (var x = 0; x < this.columns; x++) {
+        if (typeof(this.Board.board[x][loseRow].tile) == 'object') {
+            console.log("You LOSE!!!");
+            return 1;
+        }
+    }
+    return 0;
+};
+
+WB.GameState.checkWin = function() {
+    for (var y = 0; y < this.rows; y++) {
+        for (var x = 0; x < this.columns; x++) {
+            if (typeof(this.Board.board[x][y].special) == 'string'
+                && this.Board.board[x][y].special == 'gold') {
+                    return 0;
+            }
+        }
+    }
+    console.log("You WIN!!!");
+    return 0;
+    // this.triggerOverLay();
 };
 
 WB.GameState.wordCancel = function() {
@@ -123,4 +150,67 @@ WB.GameState.getWordScore = function(word) {
     score.points = word.length * word.length;
     score.gold = word.length > 5 ? 1 : 0;
     return score;
+};
+
+WB.GameState.triggerOverLay = function() {
+    this.overlay = this.add.bitmapData(this.GAMEX, this.GAMEY);
+    this.overlay.ctx.fillStyle = '#000';
+    this.overlay.ctx.fillRect(0, 0, this.GAMEX, this.GAMEY);
+    this.panel = this.add.sprite(0, this.GAMEY, this.overlay);
+    this.panel.alpha = 0.65;
+
+    var levelCompletePanel = this.add.tween(this.panel);
+    levelCompletePanel.to({y: 0}, 500);
+
+    levelCompletePanel.onComplete.add(function() {
+        var style = {font: '40px Arial', fill: '#fff'};
+        this.add.text(this.GAMEX/2, this.GAMEY/2 - 90,
+            'Congratulations!', style).anchor.setTo(0.5);
+        this.add.text(this.GAMEX/2, this.GAMEY/2 - 40,
+            'Level Complete!', style).anchor.setTo(0.5);
+        
+        style = {font: '30px Arial', fill: '#fff'};
+        this.add.text(this.GAMEX/2, this.GAMEY/2 + 10,
+            'Best Score: ' + this.Score.text, style).anchor.setTo(0.5);
+
+        this.add.text(this.GAMEX/2, this.GAMEY/2 + 40,
+            'Your Score: ' + this.Score.text, style).anchor.setTo(0.5);
+
+        if (this.Score.text == this.Score.text) {
+            style = {font: '35px Arial', fill: '#f80'};
+            this.add.text(this.GAMEX/2, this.GAMEY/2 + 80,
+                    'New Record!!!', style).anchor.setTo(0.5);
+        }
+
+        this.replayLevelIcon = this.add.button(this.GAMEX/2, this.GAMEY * 3/4, 'level_button', NN.HomeState.startGameState, this);
+        this.replayLevelIcon.customParams = {};
+        this.replayLevelIcon.customParams.levelNumber = this.currentLevel;
+        this.replayLevelIcon.width = this.game.width / 5 - 2;
+        this.replayLevelIcon.height = this.game.width / 5 - 2;
+        this.replayLevelIcon.anchor.setTo(0.5);
+        this.replayArrow = this.add.sprite(this.replayLevelIcon.position.x, this.replayLevelIcon.position.y, 'replay');
+        this.replayArrow.anchor.setTo(0.5);
+        this.replayArrow.scale.setTo(this.replayLevelIcon.width/this.replayArrow.width*0.6);
+
+        this.playNextLevelIcon = this.add.button(this.GAMEX * 3/4, this.GAMEY * 3/4, 'level_button', NN.HomeState.startGameState, this);
+        this.playNextLevelIcon.customParams = {};
+        this.playNextLevelIcon.customParams.levelNumber = this.nextLevel;
+        this.playNextLevelIcon.width = this.game.width / 5 - 2;
+        this.playNextLevelIcon.height = this.game.width / 5 - 2;
+        this.playNextLevelIcon.anchor.setTo(0.5);
+        this.playArrow = this.add.sprite(this.playNextLevelIcon.position.x + 4, this.playNextLevelIcon.position.y, 'continue');
+        this.playArrow.anchor.setTo(0.5);
+        this.playArrow.scale.setTo(this.playNextLevelIcon.width/this.playArrow.width*0.6);
+
+        this.levelSelectorIcon = this.add.button(this.GAMEX/4, this.GAMEY * 3/4, 'level_button', NN.HomeState.startLevelSelectorState, this);
+        this.levelSelectorIcon.width = this.game.width / 5 - 2;
+        this.levelSelectorIcon.height = this.game.width / 5 - 2;
+        this.levelSelectorIcon.anchor.setTo(0.5);
+        this.menuIcon = this.add.sprite(this.levelSelectorIcon.position.x, this.levelSelectorIcon.position.y, 'menu');
+        this.menuIcon.anchor.setTo(0.5);
+        this.menuIcon.scale.setTo(this.levelSelectorIcon.width/this.menuIcon.width*0.6);
+
+    }, this);
+
+    levelCompletePanel.start();
 };

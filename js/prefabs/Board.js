@@ -3,11 +3,12 @@ WB.GameState = WB.GameState || {};
 
 var Board = {};
 
-Board.create = function(rows, columns, level) {
+Board.create = function(rows, columns, level, golds) {
     this.SIZEX = WB.game.world.width;
     this.SIZEY = WB.game.world.height;
     this.rows = rows;
     this.columns = columns;
+    this.goldenTiles = golds;
 
     // create and initialize the tiles structure
     this.board = Array(this.columns);
@@ -20,23 +21,26 @@ Board.create = function(rows, columns, level) {
     }
 
     this.createLetterPool();
-    this.generateGrid(rows, columns);
+    this.generateGrid();
     this.generateWordText();
     this.loadDictionary();
     // WB.game.world.bringToTop(this.texts);
 };
 
-Board.generateGrid = function(rows, cols) {
+Board.generateGrid = function() {
     // WARNING: I am amaking this start from (0, 0)
     // being the BOTTOM left corner for my brain's sake
     var index = 0;
-    this.tileSize = Math.floor(this.SIZEX / 8);
+    this.tileSize = Math.floor(this.SIZEX / (this.columns + 3));
     this.texts = WB.game.add.group();
-    for (var x = 0; x < cols; x++) {
-        for (var y = 0; y < rows - 3; y++) {
-            this.addTile(x, y);
+    for (var x = 0; x < this.columns; x++) {
+        for (var y = 0; y < this.rows - 5; y++) {
+            this.addTile(x, y, false);
         }
     }
+    this.goldenTiles.forEach(function(pos) {
+        this.addTile(pos[0], pos[1], 'gold');
+    }, this);
 };
 
 Board.getPixelFromGrid = function(gridX, gridY) {
@@ -45,10 +49,26 @@ Board.getPixelFromGrid = function(gridX, gridY) {
     return [x, y];
 };
 
-Board.addTile = function(x, y) {
+Board.addTile = function(x, y, special) {
     var pix = [];
     pix = this.getPixelFromGrid(x, y);
-    tile = WB.game.add.button(pix[0], pix[1], 'letter_tile', Board.clicked, this);
+    if (special) {
+        this.killSelectedLetters(x, y);
+        this.board[x][y].special = special;
+        if (special == 'gold') {
+            tile = WB.game.add.button(pix[0], pix[1], 'gold_tile', Board.clicked, this);
+        }
+        else if (special == 'red') {
+            tile = WB.game.add.button(pix[0], pix[1], 'red_tile', Board.clicked, this);
+        }
+        else {
+            console.log(special + ' is not accounted for yet');
+        }
+    }
+    else {
+        tile = WB.game.add.button(pix[0], pix[1], 'green_tile', Board.clicked, this);
+        this.board[x][y].special = false;
+    }
     tile.scale.setTo(this.tileSize / tile.width);
     tile.anchor.setTo(0.5);
     tile.gridx = x;
@@ -87,25 +107,25 @@ Board.newPiece = function() {
     var gridx = Math.floor(this.columns / 2) - 1;
     var gridy = this.rows - 1;
     var pixels = this.getPixelFromGrid(gridx, gridy);
-    WB.GameState.Board.addTile(gridx, gridy);
+    WB.GameState.Board.addTile(gridx, gridy, false);
     WB.GameState.Board.board[gridx][gridy].newPiece = true;
 
     // Place tile 2
     var gridLoc = this.newLocation(gridx, gridy);
     pixels = this.getPixelFromGrid(gridLoc.x, gridLoc.y);
-    WB.GameState.Board.addTile(gridLoc.x, gridLoc.y);
+    WB.GameState.Board.addTile(gridLoc.x, gridLoc.y, false);
     WB.GameState.Board.board[gridLoc.x][gridLoc.y].newPiece = true;
 
     // Place tile 3
     gridLoc = this.newLocation(gridLoc.x, gridLoc.y, gridLoc.dir);
     pixels = this.getPixelFromGrid(gridLoc.x, gridLoc.y);
-    WB.GameState.Board.addTile(gridLoc.x, gridLoc.y);
+    WB.GameState.Board.addTile(gridLoc.x, gridLoc.y, false);
     WB.GameState.Board.board[gridLoc.x][gridLoc.y].newPiece = true;
 
     // Place tile 4
     gridLoc = this.newLocation(gridLoc.x, gridLoc.y, gridLoc.dir);
     pixels = this.getPixelFromGrid(gridLoc.x, gridLoc.y);
-    WB.GameState.Board.addTile(gridLoc.x, gridLoc.y);
+    WB.GameState.Board.addTile(gridLoc.x, gridLoc.y, false);
     WB.GameState.Board.board[gridLoc.x][gridLoc.y].newPiece = true;
 
     WB.GameState.newTileDrop = true;
@@ -185,13 +205,19 @@ Board.deselectAll = function() {
     delete this.prevy;
 }
 
-Board.killSelectedLetters = function() {
-    for (var col=0; col < this.columns; col++) {
-        for (var row=0; row < this.rows; row++) {
-            if (this.board[col][row].selected) {
-                this.board[col][row].text.kill();
-                this.board[col][row].tile.kill();
-                this.board[col][row].selected = false;
+Board.killSelectedLetters = function(x, y) {
+    if (x && y) {
+        this.board[x][y].text.kill();
+        this.board[x][y].tile.kill();
+    }
+    else {
+        for (var col=0; col < this.columns; col++) {
+            for (var row=0; row < this.rows; row++) {
+                if (this.board[col][row].selected) {
+                    this.board[col][row].text.kill();
+                    this.board[col][row].tile.kill();
+                    this.board[col][row].selected = false;
+                }
             }
         }
     }
@@ -210,6 +236,7 @@ Board.letterFall = function() {
         }
     }); 
     WB.GameState.newTileDrop = false;
+    WB.GameState.checkLose();
 };
 
 Board.dropAbove = function(x, y) {
