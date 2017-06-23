@@ -13,6 +13,7 @@ WB.PreloadState.preload = function() {
 
 	// this.load.image('sprite_key', 'location/of/image/file');
     // this.load.image('player', 'assets/images/NN-Player.jpg');
+    // TODO dropped these in the assets/assets.json, now need to load dynamically here
     this.load.image('play_button', 'assets/images/Play.png');
     this.load.image('shop_button', 'assets/images/Shop_Button.png');
     this.load.image('green_tile', 'assets/images/Level_Button.png');

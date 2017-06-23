@@ -1,0 +1,54 @@
+{
+    "buttons": {
+        "play": {
+            "file": "assets/images/Play.png",
+            "key" : "play_button" 
+        },
+        "shop": {
+            "file": "assets/images/Shop_Button.png",
+            "key" : "shop_button" 
+        },
+        "levels": {
+            "file": "assets/images/Level_Icon.png",
+            "key" : "levels_button" 
+        },
+        "submit": {
+            "file": "assets/images/Submit_Button.png",
+            "key" : "submit_button" 
+        },
+        "cancel": {
+            "file": "assets/images/Cancel_Button.png",
+            "key" : "cancel_button" 
+        },
+        "menu": {
+            "file": "assets/images/MenuButton.png",
+            "key" : "menu" 
+        },
+        "replay": {
+            "file": "assets/images/ReplayArrow.png",
+            "key" : "replay" 
+        },
+        "continue": {
+            "file": "assets/images/ContinueArrow.png",
+            "key" : "continue" 
+        }
+    },
+    "tiles": {
+        "green": {
+            "file": "assets/images/Level_Button.png",
+            "key" : "green_tile" 
+        },
+        "gold": {
+            "file": "assets/images/Gold_Button.png",
+            "key" : "gold_tile" 
+        },
+        "red": {
+            "file": "assets/images/Red_Button.png",
+            "key" : "red_tile" 
+        }
+    },
+    "input_box": {
+        "file": "assets/images/nput_box.png",
+        "key" : "input_box_image" 
+    }
+}

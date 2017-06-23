@@ -28,7 +28,7 @@ Board.create = function(rows, columns, level, golds) {
 };
 
 Board.generateGrid = function() {
-    // WARNING: I am amaking this start from (0, 0)
+    // WARNING: I am making this start from (0, 0)
     // being the BOTTOM left corner for my brain's sake
     var index = 0;
     this.tileSize = Math.floor(this.SIZEX / (this.columns + 3));

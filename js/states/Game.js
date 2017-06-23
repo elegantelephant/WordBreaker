@@ -77,13 +77,13 @@ WB.GameState.create = function() {
     }, this);
 };
 
+WB.GameState.update = function() {
+    // runs many times a second
+};
+
 WB.GameState.isWord = function(word) {
     // O(n) slow lazy scan for now
     return this.Board.wordsText.indexOf("\n" + word.toLowerCase() + "\n") > 0;
-};
-
-WB.GameState.update = function() {
-    // runs many times a second
 };
 
 WB.GameState.loadLevel = function() {
@@ -92,7 +92,7 @@ WB.GameState.loadLevel = function() {
     this.columns = 6;
     // TODO make this 'level' variable smarter
     var level = 1;
-    var goldenTiles = [[2, 2], [2, 3]];
+    var goldenTiles = [[1,1], [4,1], [2,3], [3,3], [1,5], [4,5]];
     this.Board.create(this.rows, this.columns, level, goldenTiles);
     this.Score.create();
     this.Gold.create();
