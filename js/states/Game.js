@@ -31,16 +31,16 @@ WB.GameState.create = function() {
     //  before it consideres it as a swipe rather than a tap.
 
     this.game.input.onDown.add(function(pointer) {
-		// click_position contains an x and a y
+        // click_position contains an x and a y
         click_position = library.click(pointer);
     }, this);
     this.game.input.onUp.add(function(pointer) {
-		// click_release contains an x and a y AND a direction
+        // click_release contains an x and a y AND a direction
         click_release = library.release_click(pointer, click_position, swipeVsTap);
         if (click_release.direction == 'tap') {
-			// console.log("tapped");
-		}
-		else if (click_release.direction) {
+            // console.log("tapped");
+        }
+        else if (click_release.direction) {
             if (WB.GameState.newTileDrop) {
                 var pieceArray;
                 if (click_release.direction == 'left') {
@@ -72,9 +72,9 @@ WB.GameState.create = function() {
                     console.log("rotating");
                 }
             }
-			// console.log("swiped " + click_release.direction);
-		}
-	}, this);
+            // console.log("swiped " + click_release.direction);
+        }
+    }, this);
 };
 
 WB.GameState.isWord = function(word) {
