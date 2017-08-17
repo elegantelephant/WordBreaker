@@ -17,6 +17,7 @@ Phaser.Device.whenReady(function () {
     WB.game.state.add('LoginState', WB.LoginState);
     WB.game.state.add('HomeState', WB.HomeState);
     WB.game.state.add('ShopState', WB.ShopState);
+    WB.game.state.add('LevelSelectorState', WB.LevelSelectorState);
     WB.game.state.add('GameState', WB.GameState);
     WB.game.state.start('BootState');
 });

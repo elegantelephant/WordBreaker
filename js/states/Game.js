@@ -2,10 +2,11 @@ var WB = WB || {};
 
 WB.GameState = WB.GameState || {};
 
-WB.GameState.init = function() {
+WB.GameState.init = function(level) {
 
     // game constants
     this.game.stage.backgroundColor = '#000';
+    this.game.level = level ? level : 1;
 
     this.GAMEX = this.game.world.width;
     this.GAMEY = this.game.world.height;
@@ -86,7 +87,7 @@ WB.GameState.isWord = function(word) {
     return this.Board.wordsText.indexOf("\n" + word.toLowerCase() + "\n") > 0;
 };
 
-WB.GameState.loadLevel = function() {
+WB.GameState.loadLevel = function(level) {
     // abstractify the levels to be dynamically generated
     this.rows = 12;
     this.columns = 6;

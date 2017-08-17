@@ -17,6 +17,10 @@ WB.HomeState.create = function() {
     this.shopButton.anchor.setTo(0.5);
     this.shopButton.scale.setTo(0.5);
 
+    this.levelsButton = this.add.button(this.game.width / 2, this.game.height * 3 / 6, 'levels_button', WB.HomeState.startLevelSelectorState, this),
+    this.levelsButton.anchor.setTo(0.5);
+    this.levelsButton.scale.setTo(0.5);
+
     this.playButton = this.add.button(this.game.width / 2, this.game.height * 4 / 6, 'play_button', WB.HomeState.startGameState, this),
     this.playButton.anchor.setTo(0.5);
     this.playButton.scale.setTo(0.5);
@@ -24,6 +28,10 @@ WB.HomeState.create = function() {
 
 WB.HomeState.startGameState = function() {
     this.state.start('GameState');
+};
+
+WB.HomeState.startLevelSelectorState = function() {
+    this.state.start('LevelSelectorState');
 };
 
 WB.HomeState.startShopState = function() {
