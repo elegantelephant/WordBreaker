@@ -92,7 +92,6 @@ WB.GameState.loadLevel = function(level) {
     this.rows = 12;
     this.columns = 6;
     // TODO make this 'level' variable smarter
-    var level = 1;
     var goldenTiles = [[1,1], [4,1], [2,3], [3,3], [1,5], [4,5]];
     this.Board.create(this.rows, this.columns, level, goldenTiles);
     this.Score.create();

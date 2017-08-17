@@ -40,8 +40,6 @@ WB.LevelSelectorState.create = function() {
         this.levelText.text = i.toString();
         this.levelText.anchor.setTo(0.5, 0.47);
 
-        this.levelsButton.input.enabled = false;
-
         //if (record[i-1] || record[i] || i == 1) {
             // this level is unlocked ... display level number
         //    if (record[i]) {

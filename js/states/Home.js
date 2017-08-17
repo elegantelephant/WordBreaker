@@ -26,8 +26,13 @@ WB.HomeState.create = function() {
     this.playButton.scale.setTo(0.5);
 };
 
-WB.HomeState.startGameState = function() {
-    this.state.start('GameState');
+WB.HomeState.startGameState = function(button) {
+    if (button.customParams) {
+        this.state.start('GameState', true, false, button.customParams.levelNumber);
+    }
+    else {
+        this.state.start('GameState');
+    }
 };
 
 WB.HomeState.startLevelSelectorState = function() {
