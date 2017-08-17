@@ -9,8 +9,8 @@ WB.BootState.init = function() {
 
 WB.BootState.preload = function() {
         this.load.image('logo', 'assets/images/logo.png');
-};          
-            
+};
+
 WB.BootState.create = function() {
         this.state.start('PreloadState');
 };

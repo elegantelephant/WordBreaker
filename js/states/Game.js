@@ -168,7 +168,7 @@ WB.GameState.triggerOverLay = function() {
             'Congratulations!', style).anchor.setTo(0.5);
         this.add.text(this.GAMEX/2, this.GAMEY/2 - 40,
             'Level Complete!', style).anchor.setTo(0.5);
-        
+
         style = {font: '30px Arial', fill: '#fff'};
         this.add.text(this.GAMEX/2, this.GAMEY/2 + 10,
             'Best Score: ' + this.Score.text, style).anchor.setTo(0.5);

@@ -6,8 +6,7 @@ WB.ShopState.init = function() {
 };
 
 WB.ShopState.preload = function() {
-};          
-            
-WB.ShopState.create = function() {
 };
 
+WB.ShopState.create = function() {
+};
