@@ -3,12 +3,12 @@ WB.GameState = WB.GameState || {};
 
 var Board = {};
 
-Board.create = function(rows, columns, level, golds) {
+Board.create = function(levelData) {
     this.SIZEX = WB.game.world.width;
     this.SIZEY = WB.game.world.height;
-    this.rows = rows;
-    this.columns = columns;
-    this.goldenTiles = golds;
+    this.rows = levelData.rows;
+    this.columns = levelData.columns;
+    this.goldenTiles = levelData.goldenTiles;
 
     // create and initialize the tiles structure
     this.board = Array(this.columns);

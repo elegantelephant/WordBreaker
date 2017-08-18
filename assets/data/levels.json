@@ -1,0 +1,103 @@
+{
+    "level1": {
+        "rows"   : 12,
+        "columns": 6,
+        "winCondition": "gold",
+        "goldenTiles": [[1,1], [4,1], [2,3], [3,3], [1,5], [4,5]]
+    },
+    "level2": {
+        "rows"   : 4,
+        "columns": 3,
+        "winCondition": 0
+    },
+    "level3": {
+        "rows"   : 4,
+        "columns": 4,
+        "winCondition": 0
+    },
+    "level4": {
+        "rows"   : 4,
+        "columns": 4,
+        "winCondition": 1
+    },
+    "level5": {
+        "rows"   : 6,
+        "columns": 5,
+        "winCondition": 3
+    },
+    "level6": {
+        "rows"   : 5,
+        "columns": 4,
+        "winCondition": 2
+    },
+    "level7": {
+        "rows"   : 5,
+        "columns": 4,
+        "winCondition": 2
+    },
+    "level8": {
+        "rows"   : 5,
+        "columns": 5,
+        "winCondition": 3
+    },
+    "level9": {
+        "rows"   : 5,
+        "columns": 5,
+        "winCondition": 3
+    },
+    "level10": {
+        "rows"   : 7,
+        "columns": 6,
+        "winCondition": 6
+    },
+    "level11": {
+        "rows"   : 6,
+        "columns": 6,
+        "winCondition": 5
+    },
+    "level12": {
+        "rows"   : 6,
+        "columns": 5,
+        "winCondition": 4
+    },
+    "level13": {
+        "rows"   : 6,
+        "columns": 5,
+        "winCondition": 4
+    },
+    "level14": {
+        "rows"   : 6,
+        "columns": 5,
+        "winCondition": 4
+    },
+    "level15": {
+        "rows"   : 6,
+        "columns": 5,
+        "winCondition": 4
+    },
+    "level16": {
+        "rows"   : 6,
+        "columns": 5,
+        "winCondition": 4
+    },
+    "level17": {
+        "rows"   : 6,
+        "columns": 5,
+        "winCondition": 4
+    },
+    "level18": {
+        "rows"   : 6,
+        "columns": 5,
+        "winCondition": 4
+    },
+    "level19": {
+        "rows"   : 6,
+        "columns": 5,
+        "winCondition": 4
+    },
+    "level20": {
+        "rows"   : 9,
+        "columns": 7,
+        "winCondition": 10
+    }
+}

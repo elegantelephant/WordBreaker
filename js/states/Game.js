@@ -6,7 +6,7 @@ WB.GameState.init = function(level) {
 
     // game constants
     this.game.stage.backgroundColor = '#000';
-    this.game.level = level ? level : 1;
+    this.currentLevel = level ? level : 1;
 
     this.GAMEX = this.game.world.width;
     this.GAMEY = this.game.world.height;
@@ -88,12 +88,9 @@ WB.GameState.isWord = function(word) {
 };
 
 WB.GameState.loadLevel = function(level) {
-    // abstractify the levels to be dynamically generated
-    this.rows = 12;
-    this.columns = 6;
-    // TODO make this 'level' variable smarter
-    var goldenTiles = [[1,1], [4,1], [2,3], [3,3], [1,5], [4,5]];
-    this.Board.create(this.rows, this.columns, level, goldenTiles);
+    var levels = JSON.parse(this.game.cache.getText('levels'));
+    this.levelData = levels['level' + this.currentLevel];
+    this.Board.create(this.levelData);
     this.Score.create();
     this.Gold.create();
 };
@@ -136,8 +133,8 @@ WB.GameState.checkWin = function() {
         }
     }
     console.log("You WIN!!!");
-    return 0;
     // this.triggerOverLay();
+    return 1;
 };
 
 WB.GameState.wordCancel = function() {
