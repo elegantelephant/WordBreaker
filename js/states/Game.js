@@ -117,6 +117,7 @@ WB.GameState.checkLose = function() {
     for (var x = 0; x < this.Board.columns; x++) {
         if (typeof(this.Board.board[x][loseRow].tile) == 'object') {
             console.log("You LOSE!!!");
+            this.triggerOverLay();
             return 1;
         }
     }
@@ -128,13 +129,13 @@ WB.GameState.checkWin = function() {
         for (var x = 0; x < this.Board.columns; x++) {
             if (typeof(this.Board.board[x][y].special) == 'string'
                 && this.Board.board[x][y].special == 'gold') {
-                    return 1;
+                    return 0;
             }
         }
     }
     console.log("You WIN!!!");
-    // this.triggerOverLay();
-    return 0;
+    this.triggerOverLay();
+    return 1;
 };
 
 WB.GameState.wordCancel = function() {
@@ -179,7 +180,7 @@ WB.GameState.triggerOverLay = function() {
                     'New Record!!!', style).anchor.setTo(0.5);
         }
 
-        this.replayLevelIcon = this.add.button(this.GAMEX/2, this.GAMEY * 3/4, 'level_button', WB.HomeState.startGameState, this);
+        this.replayLevelIcon = this.add.button(this.GAMEX/2, this.GAMEY * 3/4, 'green_tile', WB.HomeState.startGameState, this);
         this.replayLevelIcon.customParams = {};
         this.replayLevelIcon.customParams.levelNumber = this.currentLevel;
         this.replayLevelIcon.width = this.game.width / 5 - 2;
@@ -189,7 +190,7 @@ WB.GameState.triggerOverLay = function() {
         this.replayArrow.anchor.setTo(0.5);
         this.replayArrow.scale.setTo(this.replayLevelIcon.width/this.replayArrow.width*0.6);
 
-        this.playNextLevelIcon = this.add.button(this.GAMEX * 3/4, this.GAMEY * 3/4, 'level_button', WB.HomeState.startGameState, this);
+        this.playNextLevelIcon = this.add.button(this.GAMEX * 3/4, this.GAMEY * 3/4, 'green_tile', WB.HomeState.startGameState, this);
         this.playNextLevelIcon.customParams = {};
         this.playNextLevelIcon.customParams.levelNumber = this.nextLevel;
         this.playNextLevelIcon.width = this.game.width / 5 - 2;
@@ -199,7 +200,7 @@ WB.GameState.triggerOverLay = function() {
         this.playArrow.anchor.setTo(0.5);
         this.playArrow.scale.setTo(this.playNextLevelIcon.width/this.playArrow.width*0.6);
 
-        this.levelSelectorIcon = this.add.button(this.GAMEX/4, this.GAMEY * 3/4, 'level_button', WB.HomeState.startLevelSelectorState, this);
+        this.levelSelectorIcon = this.add.button(this.GAMEX/4, this.GAMEY * 3/4, 'green_tile', WB.HomeState.startLevelSelectorState, this);
         this.levelSelectorIcon.width = this.game.width / 5 - 2;
         this.levelSelectorIcon.height = this.game.width / 5 - 2;
         this.levelSelectorIcon.anchor.setTo(0.5);

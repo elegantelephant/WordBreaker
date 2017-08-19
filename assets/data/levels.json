@@ -3,6 +3,12 @@
         "rows"   : 12,
         "columns": 6,
         "winCondition": "gold",
+        "goldenTiles": [[1,1]] 
+    },
+    "level21": {
+        "rows"   : 12,
+        "columns": 6,
+        "winCondition": "gold",
         "goldenTiles": [[1,1], [4,1], [2,3], [3,3], [1,5], [4,5]]
     },
     "level2": {
