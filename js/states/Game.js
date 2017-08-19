@@ -57,7 +57,7 @@ WB.GameState.create = function() {
                     // shift the new piece to the right
                     pieceArray = WB.GameState.Board.findNewPiece();
                     pieceArray.reverse();
-                    if (pieceArray[0].tile.gridx < this.columns - 1) {
+                    if (pieceArray[0].tile.gridx < this.Board.columns - 1) {
                         pieceArray.forEach(function(unit) {
                             WB.GameState.Piece.move(unit, {x: unit.tile.gridx + 1, y: unit.tile.gridy});
                         });
