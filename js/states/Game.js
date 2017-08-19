@@ -113,8 +113,8 @@ WB.GameState.wordSubmit = function() {
 };
 
 WB.GameState.checkLose = function() {
-    var loseRow = this.rows - 3;
-    for (var x = 0; x < this.columns; x++) {
+    var loseRow = this.Board.rows - 3;
+    for (var x = 0; x < this.Board.columns; x++) {
         if (typeof(this.Board.board[x][loseRow].tile) == 'object') {
             console.log("You LOSE!!!");
             return 1;
@@ -124,17 +124,17 @@ WB.GameState.checkLose = function() {
 };
 
 WB.GameState.checkWin = function() {
-    for (var y = 0; y < this.rows; y++) {
-        for (var x = 0; x < this.columns; x++) {
+    for (var y = 0; y < this.Board.rows; y++) {
+        for (var x = 0; x < this.Board.columns; x++) {
             if (typeof(this.Board.board[x][y].special) == 'string'
                 && this.Board.board[x][y].special == 'gold') {
-                    return 0;
+                    return 1;
             }
         }
     }
     console.log("You WIN!!!");
     // this.triggerOverLay();
-    return 1;
+    return 0;
 };
 
 WB.GameState.wordCancel = function() {

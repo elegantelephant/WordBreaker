@@ -6,9 +6,10 @@
         "goldenTiles": [[1,1], [4,1], [2,3], [3,3], [1,5], [4,5]]
     },
     "level2": {
-        "rows"   : 4,
-        "columns": 3,
-        "winCondition": 0
+        "rows"   : 10,
+        "columns": 5,
+        "winCondition": "gold",
+        "goldenTiles": [[2,2], [2,3], [3,3], [3,2]]
     },
     "level3": {
         "rows"   : 4,
