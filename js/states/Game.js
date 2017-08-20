@@ -104,8 +104,10 @@ WB.GameState.wordSubmit = function() {
         WB.GameState.Board.killSelectedLetters();
         WB.GameState.Board.letterFall();
         WB.GameState.wordCancel();
-        WB.GameState.checkWin();
-        WB.GameState.Board.newPiece();
+        var won = WB.GameState.checkWin();
+        if (!won) {
+           WB.GameState.Board.newPiece();
+        }
     }
     else {
         WB.GameState.wordCancel();
@@ -192,7 +194,7 @@ WB.GameState.triggerOverLay = function() {
 
         this.playNextLevelIcon = this.add.button(this.GAMEX * 3/4, this.GAMEY * 3/4, 'green_tile', WB.HomeState.startGameState, this);
         this.playNextLevelIcon.customParams = {};
-        this.playNextLevelIcon.customParams.levelNumber = this.nextLevel;
+        this.playNextLevelIcon.customParams.levelNumber = this.currentLevel + 1;
         this.playNextLevelIcon.width = this.game.width / 5 - 2;
         this.playNextLevelIcon.height = this.game.width / 5 - 2;
         this.playNextLevelIcon.anchor.setTo(0.5);
