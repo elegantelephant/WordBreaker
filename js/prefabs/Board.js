@@ -38,9 +38,11 @@ Board.generateGrid = function() {
             this.addTile(x, y, false);
         }
     }
-    this.goldenTiles.forEach(function(pos) {
-        this.addTile(pos[0], pos[1], 'gold');
-    }, this);
+    if (this.goldenTiles) {
+        this.goldenTiles.forEach(function(pos) {
+            this.addTile(pos[0], pos[1], 'gold');
+        }, this);
+    }
 };
 
 Board.getPixelFromGrid = function(gridX, gridY) {

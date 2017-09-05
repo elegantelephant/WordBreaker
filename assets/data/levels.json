@@ -3,7 +3,7 @@
         "rows"   : 12,
         "columns": 6,
         "winCondition": "gold",
-        "goldenTiles": [[1,1]] 
+        "goldenTiles": [[4,1]] 
     },
     "level21": {
         "rows"   : 12,
@@ -18,12 +18,14 @@
         "goldenTiles": [[2,2], [2,3], [3,3], [3,2]]
     },
     "level3": {
-        "rows"   : 4,
-        "columns": 4,
-        "winCondition": 0
+        "rows"   : 11,
+        "columns": 5,
+        "winCondition": "longWords",
+        "minLength": 5,
+        "count": 1
     },
     "level4": {
-        "rows"   : 4,
+        "rows"   : 6,
         "columns": 4,
         "winCondition": 1
     },

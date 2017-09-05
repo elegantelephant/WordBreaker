@@ -19,6 +19,7 @@ WB.GameState.create = function() {
     this.loadLevel();
     this.SubmitBtn.createSubmitBtn(WB.GameState.wordSubmit);
     this.CancelBtn.createCancelBtn(WB.GameState.wordCancel);
+    WB.game.wordLengthHistory = {};
     // this.player = this.createCharacter('player', 0, 0, 'right');
     // this.game.physics.arcade.enable(this.player);
     // this.player.body.setSize(60, 60, 0, 0);
@@ -93,14 +94,17 @@ WB.GameState.loadLevel = function(level) {
     this.Board.create(this.levelData);
     this.Score.create();
     this.Gold.create();
+    if (this.levelData.winCondition == 'longWords') {
+        this.longWords = 0;
+    }
 };
 
 WB.GameState.wordSubmit = function() {
     var word = WB.GameState.Board.currentWord.text;
     if (WB.GameState.isWord(word)) {
-        var score = WB.GameState.getWordScore(word);
-        WB.GameState.Score.add(+score.points);
-        WB.GameState.Gold.add(+score.gold);
+        WB.GameState.getWordScore(word);
+        console.log (word.length);
+        // WB.game.wordLengthHistory.{word.length};
         WB.GameState.Board.killSelectedLetters();
         WB.GameState.Board.letterFall();
         WB.GameState.wordCancel();
@@ -116,6 +120,7 @@ WB.GameState.wordSubmit = function() {
 
 WB.GameState.checkLose = function() {
     var loseRow = this.Board.rows - 3;
+
     for (var x = 0; x < this.Board.columns; x++) {
         if (typeof(this.Board.board[x][loseRow].tile) == 'object') {
             console.log("You LOSE!!!");
@@ -127,13 +132,19 @@ WB.GameState.checkLose = function() {
 };
 
 WB.GameState.checkWin = function() {
-    for (var y = 0; y < this.Board.rows; y++) {
-        for (var x = 0; x < this.Board.columns; x++) {
-            if (typeof(this.Board.board[x][y].special) == 'string'
-                && this.Board.board[x][y].special == 'gold') {
-                    return 0;
+    if (this.levelData.winCondition == 'gold') {
+        for (var y = 0; y < this.Board.rows; y++) {
+            for (var x = 0; x < this.Board.columns; x++) {
+                if (typeof(this.Board.board[x][y].special) == 'string'
+                    && this.Board.board[x][y].special == 'gold') {
+                        return 0;
+                }
             }
         }
+    }
+    else if (this.levelData.winCondition == 'longWords'
+        && this.longWords < this.levelData.count) {
+            return 0;
     }
     console.log("You WIN!!!");
     this.triggerOverLay();
@@ -146,10 +157,11 @@ WB.GameState.wordCancel = function() {
 };
 
 WB.GameState.getWordScore = function(word) {
-    var score = {};
-    score.points = word.length * word.length;
-    score.gold = word.length > 5 ? 1 : 0;
-    return score;
+    if (this.levelData.winCondition == 'longWords') {
+        this.longWords += word.length >= this.levelData.minLength ? 1 : 0;
+    }
+    WB.GameState.Score.add(word.length * word.length);
+    WB.GameState.Gold.add(word.length > 5 ? 1 : 0);
 };
 
 WB.GameState.triggerOverLay = function() {
