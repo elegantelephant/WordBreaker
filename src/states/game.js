@@ -7,6 +7,7 @@ import Score from '../prefabs/score';
 import Gold from '../prefabs/gold';
 import Tile from '../prefabs/tile';
 import Timer from '../prefabs/timer';
+import AchievementMonitor from '../prefabs/achievement-monitor';
 
 export default class GameState extends Phaser.State {
     init(level) {
@@ -31,6 +32,8 @@ export default class GameState extends Phaser.State {
         this.score = new Score(this.game, this);
         this.gold = new Gold(this.game, this);
         this.tile = new Tile(this.game, this);
+
+        this.achievementMonitor = new AchievementMonitor();
     }
 
     create() {
@@ -170,6 +173,22 @@ export default class GameState extends Phaser.State {
                 return 0;
         }
         console.log("You WIN!!!");
+
+        // achievements
+        var levelStats = {
+            time: this.timer.getTime()
+        };
+
+        this.levelData.speedAchievementSeconds = levelStats.time + 1; // DEBUG: testing speed achievement success
+        // this.levelData.speedAchievementSeconds = levelStats.time; // DEBUG: testing speed achievement failure
+        var achievements = this.achievementMonitor.checkForAchievements(this.levelData, levelStats);
+
+        if(achievements.length > 0) {
+            // TODO: add level achienves attained to level completed overlay
+            console.log("Congrats you got the following achievements!", achievements);
+        }
+
+        // level completed overlay
         this.triggerOverLay();
         return 1;
     }
