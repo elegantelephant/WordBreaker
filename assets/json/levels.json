@@ -9,13 +9,7 @@
                 "tiles": [[2, 2], [1, 1]]
             }
         ],
-        "goldenTiles": [[4,1]] 
-    },
-    "level21": {
-        "rows"   : 12,
-        "columns": 6,
-        "winCondition": "gold",
-        "goldenTiles": [[1,1], [4,1], [2,3], [3,3], [1,5], [4,5]]
+        "goldenTiles": [[4,1]]
     },
     "level2": {
         "rows"   : 10,
@@ -53,7 +47,12 @@
     "level8": {
         "rows"   : 5,
         "columns": 5,
-        "winCondition": 3
+        "winCondition": {
+            "longWords" : {
+                "minLength" : 3,
+                "count"     : 1
+            }
+        }
     },
     "level9": {
         "rows"   : 5,
@@ -114,5 +113,11 @@
         "rows"   : 9,
         "columns": 7,
         "winCondition": 10
+    },
+    "level21": {
+        "rows"   : 12,
+        "columns": 6,
+        "winCondition": "gold",
+        "goldenTiles": [[1,1], [4,1], [2,3], [3,3], [1,5], [4,5]]
     }
 }
