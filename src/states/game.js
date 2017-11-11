@@ -120,7 +120,7 @@ export default class GameState extends Phaser.State {
         this.board.create(this.levelData);
         this.score.create();
         this.gold.create();
-        if (this.levelData.winCondition == 'longWords') {
+        if (this.levelData.winCondition.longWords) {
             this.longWords = 0;
         }
     }
@@ -158,19 +158,20 @@ export default class GameState extends Phaser.State {
     }
 
     checkWin() {
-        if (this.levelData.winCondition == 'gold') {
+        if (this.levelData.winCondition.gold) {
             for (var y = 0; y < this.board.rows; y++) {
                 for (var x = 0; x < this.board.columns; x++) {
                     if (typeof(this.board.board[x][y].special) == 'string'
                         && this.board.board[x][y].special == 'gold') {
-                            return 0;
+                        return 0;
                     }
                 }
             }
         }
-        else if (this.levelData.winCondition == 'longWords'
-            && this.longWords < this.levelData.count) {
-                return 0;
+        var longWordsParams = this.levelData.winCondition.longWords;
+        if (longWordsParams
+            && this.longWords < longWordsParams.count) {
+            return 0;
         }
         console.log("You WIN!!!");
 
@@ -199,8 +200,9 @@ export default class GameState extends Phaser.State {
     }
 
     getWordScore(word) {
-        if (this.levelData.winCondition == 'longWords') {
-            this.longWords += word.length >= this.levelData.minLength ? 1 : 0;
+        var longWordsParams = this.levelData.winCondition.longWords;
+        if (longWordsParams) {
+            this.longWords += word.length >= longWordsParams.minLength ? 1 : 0;
         }
         this.score.add(word.length * word.length);
         this.gold.add(word.length > 5 ? 1 : 0);
