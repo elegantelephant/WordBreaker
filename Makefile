@@ -11,7 +11,7 @@ stop:
 	killall npm
 
 dist:
-	npm dist </dev/null
+	npm run dist </dev/null
 
 node_modules: package.json $(NPM)
 	npm install
