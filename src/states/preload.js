@@ -51,8 +51,8 @@ export default class PreloadState extends Phaser.State {
     loadComplete() {
         //this.game.time.events.add(Phaser.Timer.SECOND, function() {
         this.game.time.events.add(Phaser.Timer.SECOND * 3, function() {
-            this.state.start('Login');
-            //this.game.state.start("Home"); // DEBUG: bypass login state for testing...
+            //this.state.start('Login');
+            this.game.state.start("Home"); // DEBUG: bypass login state for testing...
         }, this);
     }
 }
