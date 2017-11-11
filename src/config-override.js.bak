@@ -1,0 +1,14 @@
+// Copy this to js/config-override.js and paste in settings from firebase.google.com
+// Initialize Firebase
+var config = {
+  "firebase":{
+    apiKey: "AIzaSyBs5HHcsejihxDVFrNuwx9uBQ9j33KthV0",
+    authDomain: "wordbreakout.firebaseapp.com",
+    databaseURL: "https://wordbreakout.firebaseio.com",
+    projectId: "wordbreakout",
+    storageBucket: "wordbreakout.appspot.com",
+    messagingSenderId: "145911507505"
+  },
+};
+
+export default config;

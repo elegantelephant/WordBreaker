@@ -5,9 +5,10 @@ import getConfig from './config';
 export default class DB {
     constructor () {
         //init firebase
-        firebase.initializeApp(getConfig(config).firebase);
+        //firebase.initializeApp(getConfig(config).firebase);
 
-        this.database = firebase.database().ref();
+        //this.database = firebase.database().ref();
+        this.database = {} // DEBUG: mock database
     }
 
     addModel (key, className) {
