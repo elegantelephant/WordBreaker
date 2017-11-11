@@ -6,6 +6,7 @@ import SubmitBtn from '../prefabs/submit-btn';
 import Score from '../prefabs/score';
 import Gold from '../prefabs/gold';
 import Tile from '../prefabs/tile';
+import Timer from '../prefabs/timer';
 
 export default class GameState extends Phaser.State {
     init(level) {
@@ -95,6 +96,10 @@ export default class GameState extends Phaser.State {
                 // console.log("swiped " + click_release.direction);
             }
         }, this);
+
+        // Create / Start the Timer
+        this.timer = new Timer(this.game, this.game.world.width / 2, 0);
+        this.game.add.existing(this.timer);
     }
 
     update() {
