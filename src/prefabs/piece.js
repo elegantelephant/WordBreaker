@@ -15,9 +15,9 @@ export default class Piece {
     move(unit, to) {
         var moveTile, moveText;
         var	pixels = this.gameState.board.getPixelFromGrid(to.x, to.y);
-        var from = {x: unit.tile.gridx, y: unit.tile.gridy};
+        var from = {x: unit.button.gridx, y: unit.button.gridy};
 
-        moveTile = this.game.add.tween(unit.tile);
+        moveTile = this.game.add.tween(unit.button);
         moveText = this.game.add.tween(unit.text);
         moveTile.to({x: pixels[0], y: pixels[1]}, 400);
         moveText.to({x: pixels[0], y: pixels[1]}, 400);
@@ -25,8 +25,8 @@ export default class Piece {
         moveTile.start();
         moveText.start();
         this.gameState.board.board[to.x][to.y] = unit;
-        unit.tile.gridx = to.x;
-        unit.tile.gridy = to.y;
+        unit.button.gridx = to.x;
+        unit.button.gridy = to.y;
         this.gameState.board.board[from.x][from.y] = {};
     }
 }

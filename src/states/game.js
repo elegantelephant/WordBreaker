@@ -5,7 +5,6 @@ import CancelBtn from '../prefabs/cancel-btn';
 import SubmitBtn from '../prefabs/submit-btn';
 import Score from '../prefabs/score';
 import Gold from '../prefabs/gold';
-import Tile from '../prefabs/tile';
 import Timer from '../prefabs/timer';
 
 export default class GameState extends Phaser.State {
@@ -30,7 +29,6 @@ export default class GameState extends Phaser.State {
         this.submitBtn = new SubmitBtn(this.game, this);
         this.score = new Score(this.game, this);
         this.gold = new Gold(this.game, this);
-        this.tile = new Tile(this.game, this);
     }
 
     create() {
@@ -67,9 +65,9 @@ export default class GameState extends Phaser.State {
                     if (click_release.direction == 'left') {
                         // shift the new piece to the left
                         pieceArray = this.board.findNewPiece();
-                        if (pieceArray[0].tile.gridx > 0) {
+                        if (pieceArray[0].button.gridx > 0) {
                             pieceArray.forEach((unit) => {
-                                this.piece.move(unit, {x: unit.tile.gridx - 1, y: unit.tile.gridy});
+                                this.piece.move(unit, {x: unit.button.gridx - 1, y: unit.button.gridy});
                             });
                         }
                     }
@@ -77,9 +75,9 @@ export default class GameState extends Phaser.State {
                         // shift the new piece to the right
                         pieceArray = this.board.findNewPiece();
                         pieceArray.reverse();
-                        if (pieceArray[0].tile.gridx < this.board.columns - 1) {
+                        if (pieceArray[0].button.gridx < this.board.columns - 1) {
                             pieceArray.forEach((unit) => {
-                                this.piece.move(unit, {x: unit.tile.gridx + 1, y: unit.tile.gridy});
+                                this.piece.move(unit, {x: unit.button.gridx + 1, y: unit.button.gridy});
                             });
                         }
                     }
@@ -145,7 +143,7 @@ export default class GameState extends Phaser.State {
         var loseRow = this.board.rows - 3;
 
         for (var x = 0; x < this.board.columns; x++) {
-            if (typeof(this.board.board[x][loseRow].tile) == 'object') {
+            if (typeof(this.board.board[x][loseRow].button) == 'object') {
                 console.log("You LOSE!!!");
                 this.triggerOverLay();
                 return 1;

@@ -1,3 +1,5 @@
+import Tile from '../prefabs/tile';
+
 export default class Board {
     constructor(game, gameState) {
         this.game = game;
@@ -33,7 +35,7 @@ export default class Board {
         // being the BOTTOM left corner for my brain's sake
         var index = 0;
         this.tileSize = Math.floor(this.SIZEX / (this.columns + 3));
-        this.texts = this.game.add.group();
+        this.tiles = this.game.add.group();
         for (var x = 0; x < this.columns; x++) {
             for (var y = 0; y < this.rows - 5; y++) {
                 this.addTile(x, y, false);
@@ -53,57 +55,13 @@ export default class Board {
     }
 
     addTile(x, y, special) {
-        var pix = [];
-        pix = this.getPixelFromGrid(x, y);
+        var pix = this.getPixelFromGrid(x, y);
 
-        var tile;
         if (special) {
             this.killSelectedLetters(x, y);
-            this.board[x][y].special = special;
-            if (special == 'gold') {
-                tile = this.game.add.button(pix[0], pix[1], 'gold_tile', this.clicked, this);
-            }
-            else if (special == 'red') {
-                tile = this.game.add.button(pix[0], pix[1], 'red_tile', this.clicked, this);
-            }
-            else {
-                console.log(special + ' is not accounted for yet');
-            }
         }
-        else {
-            tile = this.game.add.button(pix[0], pix[1], 'green_tile', this.clicked, this);
-            this.board[x][y].special = false;
-        }
-        tile.scale.setTo(this.tileSize / tile.width);
-        tile.anchor.setTo(0.5);
-        tile.gridx = x;
-        tile.gridy = y;
-        this.board[x][y].tile = tile;
-        this.addLetter(pix[0], pix[1], x, y);
-    }
-
-    addLetter(pixX, pixY, x, y) {
-        var text = this.texts.getFirstExists(false);
-        if (!text) {
-            text = this.game.add.text(pixX, pixY);
-            text.anchor.setTo(0.5);
-        }
-        else {
-            text.reset(pixX, pixY);
-        }
-        // Choose random letter from pool
-        text.text = this.getRandomLetter();
-        text.style.font = 'bold 22pt Arial';
-        text.style.fill = '#22f';
-        this.texts.add(text);
-        this.board[x][y].text = text;
-        this.game.world.bringToTop(this.texts);
-    }
-
-    getRandomLetter() {
-        var randomNumber = Math.floor(Math.random() * this.letterPool.length);
-        var letter = this.letterPool.charAt(randomNumber).toUpperCase();
-        return letter;
+        this.board[x][y] = new Tile(this, x, y, pix[0], pix[1], special);
+        this.tiles.add(this.board[x][y]);
     }
 
     newPiece() {
@@ -163,7 +121,7 @@ export default class Board {
         var wholePiece = [];
         for (var col=0; col < this.columns; col++) {
             for (var row=0; row < this.rows; row++) {
-                if (typeof(this.board[col][row].tile) !== 'undefined'
+                if (typeof(this.board[col][row].button) !== 'undefined'
                        && this.board[col][row].newPiece) {
                     wholePiece.push(this.board[col][row]);
                 }
@@ -197,8 +155,8 @@ export default class Board {
     deselectAll() {
         for (var col=0; col < this.columns; col++) {
             for (var row=0; row < this.rows; row++) {
-                if (typeof(this.board[col][row].tile) !== 'undefined') {
-                    this.board[col][row].tile.alpha = 1.0;
+                if (typeof(this.board[col][row].button) !== 'undefined') {
+                    this.board[col][row].button.alpha = 1.0;
                     this.board[col][row].selected = false;
             // SLOPPY: the newpiece remains the new piece until the next word submission
                     this.board[col][row].newPiece = false;
@@ -211,15 +169,13 @@ export default class Board {
 
     killSelectedLetters(x, y) {
         if (x && y) {
-            this.board[x][y].text.kill();
-            this.board[x][y].tile.kill();
+            this.board[x][y].kill();
         }
         else {
             for (var col=0; col < this.columns; col++) {
                 for (var row=0; row < this.rows; row++) {
                     if (this.board[col][row].selected) {
-                        this.board[col][row].text.kill();
-                        this.board[col][row].tile.kill();
+                        this.board[col][row].kill();
                         this.board[col][row].selected = false;
                     }
                 }
@@ -232,8 +188,8 @@ export default class Board {
 
         self.board.forEach(function(column, x) {
             for (var y = 0; y < column.length; y++) {
-                if (typeof(column[y].tile) == 'undefined'
-                    || !column[y].tile._exists) {
+                if (typeof(column[y].button) == 'undefined'
+                    || !column[y].button._exists) {
                     self.dropAbove(x, y);
                     break;
                 }
@@ -256,8 +212,8 @@ export default class Board {
     findAboveTiles(x, y) {
         var floating = [];
         for (var pos=y + 1; pos < this.rows; pos++) {
-            if (typeof(this.board[x][pos].tile) !== 'undefined'
-                    && this.board[x][pos].tile._exists) {
+            if (typeof(this.board[x][pos].button) !== 'undefined'
+                    && this.board[x][pos].button._exists) {
                 floating.push(this.board[x][pos]);
             }
         }
