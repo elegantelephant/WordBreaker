@@ -3,6 +3,12 @@
         "rows"   : 12,
         "columns": 6,
         "winCondition": "gold",
+        "powerups": [
+            {
+                "type": "rocket",
+                "tiles": [[2, 2], [1, 1]]
+            }
+        ],
         "goldenTiles": [[4,1]] 
     },
     "level21": {
