@@ -68,19 +68,20 @@ export default class GameState extends Phaser.State {
                     if (click_release.direction == 'left') {
                         // shift the new piece to the left
                         pieceArray = this.board.findNewPiece();
-                        if (pieceArray[0].button.gridx > 0) {
+                        if (pieceArray[0] && pieceArray[0].gridx > 0) {
                             pieceArray.forEach((unit) => {
-                                this.piece.move(unit, {x: unit.button.gridx - 1, y: unit.button.gridy});
+                                this.piece.move(unit, {x: unit.gridx - 1, y: unit.gridy});
                             });
                         }
                     }
                     if (click_release.direction == 'right') {
                         // shift the new piece to the right
                         pieceArray = this.board.findNewPiece();
+                        console.log(pieceArray);
                         pieceArray.reverse();
-                        if (pieceArray[0].button.gridx < this.board.columns - 1) {
+                        if (pieceArray[0] && pieceArray[0].gridx < this.board.columns - 1) {
                             pieceArray.forEach((unit) => {
-                                this.piece.move(unit, {x: unit.button.gridx + 1, y: unit.button.gridy});
+                                this.piece.move(unit, {x: unit.gridx + 1, y: unit.gridy});
                             });
                         }
                     }
@@ -146,7 +147,8 @@ export default class GameState extends Phaser.State {
         var loseRow = this.board.rows - 3;
 
         for (var x = 0; x < this.board.columns; x++) {
-            if (typeof(this.board.board[x][loseRow].button) == 'object') {
+            var tile = this.board.board[x][loseRow];
+            if (typeof(tile) !== 'undefined') {
                 console.log("You LOSE!!!");
                 this.triggerOverLay();
                 return 1;
@@ -159,8 +161,8 @@ export default class GameState extends Phaser.State {
         if (this.levelData.winCondition.gold) {
             for (var y = 0; y < this.board.rows; y++) {
                 for (var x = 0; x < this.board.columns; x++) {
-                    if (typeof(this.board.board[x][y].special) == 'string'
-                        && this.board.board[x][y].special == 'gold') {
+                    var tile = this.board.board[x][y];
+                    if (tile && tile.special == 'gold') {
                         return 0;
                     }
                 }

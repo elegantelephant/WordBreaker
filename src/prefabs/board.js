@@ -19,10 +19,6 @@ export default class Board {
         this.board = Array(this.columns);
         for (var col = 0; col < this.columns; col ++) {
             this.board[col] = Array(this.rows);
-            for (var row = 0; row < this.rows; row ++) {
-                this.board[col][row] = {};
-                this.board[col][row].selected = false;
-            }
         }
 
         this.createLetterPool();
@@ -123,46 +119,44 @@ export default class Board {
         var wholePiece = [];
         for (var col=0; col < this.columns; col++) {
             for (var row=0; row < this.rows; row++) {
-                if (typeof(this.board[col][row].button) !== 'undefined'
-                       && this.board[col][row].newPiece) {
-                    wholePiece.push(this.board[col][row]);
-                }
+                var tile = this.board[col][row];
+                if (tile && tile.newPiece) { wholePiece.push(tile) }
             }
         }
         return wholePiece;
     }
 
     clicked(button) {
-        var x = button.gridx;
-        var y = button.gridy;
+        var x = button.tile.gridx;
+        var y = button.tile.gridy;
 
         // move the new piece around if that is where you clicked
         if (this.gameState.newTileDrop) {
             return;
         }
-        if (! this.board[x][y].selected
+
+        var tile = this.board[x][y];
+        if (! tile.selected
            && (typeof this.prevx === 'undefined'
              || ((Math.abs(x - this.prevx) < 2
                && Math.abs(y - this.prevy) < 2))
              )
            ) {
-            button.alpha = 0.7;
+
             this.prevx = x;
             this.prevy = y;
-            this.board[x][y].selected = true;
-            this.currentWord.text += this.board[button.gridx][button.gridy].text.text;
+
+            tile.select();
+            this.currentWord.text += tile.text.text;
         }
     }
 
     deselectAll() {
         for (var col=0; col < this.columns; col++) {
             for (var row=0; row < this.rows; row++) {
-                if (typeof(this.board[col][row].button) !== 'undefined') {
-                    this.board[col][row].button.alpha = 1.0;
-                    this.board[col][row].selected = false;
-            // SLOPPY: the newpiece remains the new piece until the next word submission
-                    this.board[col][row].newPiece = false;
-                }
+                var tile = this.board[col][row];
+
+                if (tile) { tile.unselect(); }
             }
         }
         delete this.prevx;
@@ -171,14 +165,19 @@ export default class Board {
 
     killSelectedLetters(x, y) {
         if (x && y) {
-            this.board[x][y].kill();
+            var tile = this.board[x][y];
+            if (tile) {
+                tile.kill();
+                delete this.board[x][y];
+            }
         }
         else {
             for (var col=0; col < this.columns; col++) {
                 for (var row=0; row < this.rows; row++) {
-                    if (this.board[col][row].selected) {
-                        this.board[col][row].kill();
-                        this.board[col][row].selected = false;
+                    var tile = this.board[col][row];
+                    if (tile && tile.selected) {
+                        tile.kill();
+                        delete this.board[col][row];
                     }
                 }
             }
@@ -190,8 +189,8 @@ export default class Board {
 
         self.board.forEach(function(column, x) {
             for (var y = 0; y < column.length; y++) {
-                if (typeof(column[y].button) == 'undefined'
-                    || !column[y].button._exists) {
+                var tile = column[y];
+                if (! tile) {
                     self.dropAbove(x, y);
                     break;
                 }
@@ -214,11 +213,10 @@ export default class Board {
     findAboveTiles(x, y) {
         var floating = [];
         for (var pos=y + 1; pos < this.rows; pos++) {
-            if (typeof(this.board[x][pos].button) !== 'undefined'
-                    && this.board[x][pos].button._exists) {
-                floating.push(this.board[x][pos]);
-            }
+            var tile = this.board[x][pos];
+            if (tile) { floating.push(tile) }
         }
+        console.log(x, y, 'found', floating);
         return floating;
     }
 

@@ -10,9 +10,9 @@ export default class Tile extends Phaser.Group {
 
         // initial data
         this.board = board;
-        this.pixel_x = pixel_x;
-        this.pixel_y = pixel_y;
         this.special = special;
+
+        this.position = { x: pixel_x, y: pixel_y };
 
         // TODO: get rid of these, currently still needed by piece movements in game.js
         this.gridx = gridx;
@@ -34,20 +34,18 @@ export default class Tile extends Phaser.Group {
         }
 
         var class_name = CLASS_NAMES[this.special] || DEFAULT_CLASS_NAME;
-        var button = this.add(this.board.game.add.button(this.pixel_x, this.pixel_y, class_name, this.board.clicked, this.board));
+        var button = this.add(this.board.game.add.button(0, 0, class_name, this.board.clicked, this.board));
 
         button.scale.setTo(this.board.tileSize / button.width);
         button.anchor.setTo(0.5);
 
-        // TODO: get rid of these
-        button.gridx = this.gridx;
-        button.gridy = this.gridy;
+        button.tile = this;
 
         return button;
     }
 
     addText() {
-        var text = this.add(this.board.game.add.text(this.pixel_x, this.pixel_y));
+        var text = this.add(this.board.game.add.text(0, 0));
         text.anchor.setTo(0.5);
 
         // Choose random letter from pool
@@ -64,8 +62,22 @@ export default class Tile extends Phaser.Group {
         return letter;
     }
 
+    select() {
+        this.selected = true;
+        this.button.alpha = 0.7;
+    }
+
+    unselect() {
+        this.selected = false;
+        this.newPiece = false;
+        this.button.alpha = 1.0;
+    }
+
     kill() {
         if (this.button) { this.button.kill(); }
         if (this.text) { this.text.kill(); }
+
+        this.killed = true;
+        this.unselect();
     }
 }
