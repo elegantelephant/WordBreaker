@@ -11,7 +11,9 @@ export default class Board {
         this.SIZEY = this.game.world.height;
         this.rows = levelData.rows;
         this.columns = levelData.columns;
-        this.goldenTiles = levelData.goldenTiles;
+        if (levelData.winCondition.gold) {
+            this.goldenTiles = levelData.winCondition.gold.tiles;
+        }
 
         // create and initialize the tiles structure
         this.board = Array(this.columns);

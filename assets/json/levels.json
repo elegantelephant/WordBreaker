@@ -2,27 +2,36 @@
     "level1": {
         "rows"   : 12,
         "columns": 6,
-        "winCondition": "gold",
-        "goldenTiles": [[4,1]] 
-    },
-    "level21": {
-        "rows"   : 12,
-        "columns": 6,
-        "winCondition": "gold",
-        "goldenTiles": [[1,1], [4,1], [2,3], [3,3], [1,5], [4,5]]
+        "powerups": [
+            {
+                "type": "rocket",
+                "tiles": [[2, 2], [1, 1]]
+            }
+        ],
+        "winCondition": {
+            "gold": {
+                "tiles": [[4,1]]
+            }
+        }
     },
     "level2": {
         "rows"   : 10,
         "columns": 5,
-        "winCondition": "gold",
-        "goldenTiles": [[2,2], [2,3], [3,3], [3,2]]
+        "winCondition": {
+            "gold": {
+                "tiles": [[2,2], [2,3], [3,3], [3,2]]
+            }
+        }
     },
     "level3": {
         "rows"   : 11,
         "columns": 5,
-        "winCondition": "longWords",
-        "minLength": 5,
-        "count": 1
+        "winCondition": {
+            "longWords" : {
+                "minLength" : 4,
+                "count"     : 1
+            }
+        }
     },
     "level4": {
         "rows"   : 6,
@@ -47,7 +56,12 @@
     "level8": {
         "rows"   : 5,
         "columns": 5,
-        "winCondition": 3
+        "winCondition": {
+            "longWords" : {
+                "minLength" : 4,
+                "count"     : 1
+            }
+        }
     },
     "level9": {
         "rows"   : 5,
@@ -108,5 +122,14 @@
         "rows"   : 9,
         "columns": 7,
         "winCondition": 10
+    },
+    "level21": {
+        "rows"   : 12,
+        "columns": 6,
+        "winCondition": {
+            "gold": {
+                "tiles": [[1,1], [4,1], [2,3], [3,3], [1,5], [4,5]]
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-const ONE_MILLISECOND = 1000;
+const ONE_SECOND_IN_MILLISECONDS = 1000;
+const ONE_MINUTE_IN_SECONDS = 60;
 
 export default class Timer extends Phaser.Text {
     constructor(game, x, y) {
@@ -17,7 +18,7 @@ export default class Timer extends Phaser.Text {
     update() {
         var timeNow = new Date().getTime();
 
-        this.timeAccrued += (timeNow - this.prevGetTimeVal) / ONE_MILLISECOND; // track time in seconds
+        this.timeAccrued += (timeNow - this.prevGetTimeVal) / ONE_SECOND_IN_MILLISECONDS; // track time in seconds
 
         this.prevGetTimeVal = timeNow;
 
@@ -38,5 +39,10 @@ export default class Timer extends Phaser.Text {
 
             this.timeAccrued = 0; // reset until next second that passes
         }
+    }
+
+    // return time in seconds
+    getTime() {
+        return this.minutes * ONE_MINUTE_IN_SECONDS + this.seconds;
     }
 }

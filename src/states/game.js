@@ -6,6 +6,7 @@ import SubmitBtn from '../prefabs/submit-btn';
 import Score from '../prefabs/score';
 import Gold from '../prefabs/gold';
 import Timer from '../prefabs/timer';
+import AchievementMonitor from '../prefabs/achievement-monitor';
 
 export default class GameState extends Phaser.State {
     init(level) {
@@ -29,6 +30,8 @@ export default class GameState extends Phaser.State {
         this.submitBtn = new SubmitBtn(this.game, this);
         this.score = new Score(this.game, this);
         this.gold = new Gold(this.game, this);
+
+        this.achievementMonitor = new AchievementMonitor();
     }
 
     create() {
@@ -115,7 +118,7 @@ export default class GameState extends Phaser.State {
         this.board.create(this.levelData);
         this.score.create();
         this.gold.create();
-        if (this.levelData.winCondition == 'longWords') {
+        if (this.levelData.winCondition.longWords) {
             this.longWords = 0;
         }
     }
@@ -153,21 +156,38 @@ export default class GameState extends Phaser.State {
     }
 
     checkWin() {
-        if (this.levelData.winCondition == 'gold') {
+        if (this.levelData.winCondition.gold) {
             for (var y = 0; y < this.board.rows; y++) {
                 for (var x = 0; x < this.board.columns; x++) {
                     if (typeof(this.board.board[x][y].special) == 'string'
                         && this.board.board[x][y].special == 'gold') {
-                            return 0;
+                        return 0;
                     }
                 }
             }
         }
-        else if (this.levelData.winCondition == 'longWords'
-            && this.longWords < this.levelData.count) {
-                return 0;
+        var longWordsParams = this.levelData.winCondition.longWords;
+        if (longWordsParams
+            && this.longWords < longWordsParams.count) {
+            return 0;
         }
         console.log("You WIN!!!");
+
+        // achievements
+        var levelStats = {
+            time: this.timer.getTime()
+        };
+
+        this.levelData.speedAchievementSeconds = levelStats.time + 1; // DEBUG: testing speed achievement success
+        // this.levelData.speedAchievementSeconds = levelStats.time; // DEBUG: testing speed achievement failure
+        var achievements = this.achievementMonitor.checkForAchievements(this.levelData, levelStats);
+
+        if(achievements.length > 0) {
+            // TODO: add level achienves attained to level completed overlay
+            console.log("Congrats you got the following achievements!", achievements);
+        }
+
+        // level completed overlay
         this.triggerOverLay();
         return 1;
     }
@@ -178,8 +198,9 @@ export default class GameState extends Phaser.State {
     }
 
     getWordScore(word) {
-        if (this.levelData.winCondition == 'longWords') {
-            this.longWords += word.length >= this.levelData.minLength ? 1 : 0;
+        var longWordsParams = this.levelData.winCondition.longWords;
+        if (longWordsParams) {
+            this.longWords += word.length >= longWordsParams.minLength ? 1 : 0;
         }
         this.score.add(word.length * word.length);
         this.gold.add(word.length > 5 ? 1 : 0);

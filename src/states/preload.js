@@ -10,6 +10,7 @@ require('../../assets/images/Cancel_Button.png');
 require('../../assets/images/MenuButton.png');
 require('../../assets/images/ReplayArrow.png');
 require('../../assets/images/ContinueArrow.png');
+require('../../assets/images/Hourglass.png');
 
 require('../../assets/data/words.txt');
 
@@ -40,6 +41,7 @@ export default class PreloadState extends Phaser.State {
         this.load.image('menu',            this.game.global.asset_path + 'MenuButton.png');
         this.load.image('replay',          this.game.global.asset_path + 'ReplayArrow.png');
         this.load.image('continue',        this.game.global.asset_path + 'ContinueArrow.png');
+        this.load.image('continue',        this.game.global.asset_path + 'Hourglass.png');
 
         // store json in game cache
         this.game.cache.addJSON('login_data', null, loginDataJSON);
