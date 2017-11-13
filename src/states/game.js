@@ -175,17 +175,19 @@ export default class GameState extends Phaser.State {
         }
         console.log("You WIN!!!");
 
+        this.updateBestTime()
         // achievements
         var levelStats = {
             time: this.timer.getTime()
         };
 
+        // this.bestTime = +localStorage.getItem('bestTime' + this.currentLevel);
         this.levelData.speedAchievementSeconds = levelStats.time + 1; // DEBUG: testing speed achievement success
         // this.levelData.speedAchievementSeconds = levelStats.time; // DEBUG: testing speed achievement failure
         var achievements = this.achievementMonitor.checkForAchievements(this.levelData, levelStats);
 
         if(achievements.length > 0) {
-            // TODO: add level achienves attained to level completed overlay
+            // TODO: add level achievements attained to level completed overlay
             console.log("Congrats you got the following achievements!", achievements);
         }
 
@@ -205,7 +207,7 @@ export default class GameState extends Phaser.State {
             this.longWords += word.length >= longWordsParams.minLength ? 1 : 0;
         }
         this.score.add(word.length * word.length);
-        this.gold.add(word.length > 5 ? 1 : 0);
+        this.gold.add(word.length > 2 ? 1 : 0);
     }
 
     triggerOverLay() {
@@ -229,8 +231,11 @@ export default class GameState extends Phaser.State {
             this.add.text(this.GAMEX/2, this.GAMEY/2 + 10,
                 'Best Score: ' + this.score.Score.text, style).anchor.setTo(0.5);
 
-            this.add.text(this.GAMEX/2, this.GAMEY/2 + 40,
-                'Your Score: ' + this.score.Score.text, style).anchor.setTo(0.5);
+            // this.add.text(this.GAMEX/2, this.GAMEY/2 + 40,
+            //    'Best Time: ' + localStorage.getItem('bestTime' + this.currentLevel), style).anchor.setTo(0.5);
+
+            //this.add.text(this.GAMEX/2, this.GAMEY/2 + 40,
+            //    'Your Score: ' + this.score.Score.text, style).anchor.setTo(0.5);
 
             if (this.score.text == this.score.text) {
                 style = {font: '35px Arial', fill: '#f80'};
@@ -270,4 +275,14 @@ export default class GameState extends Phaser.State {
 
         levelCompletePanel.start();
     }
+
+	updateBestTime() {
+	// 	this.bestTime = +localStorage.getItem('bestTime' + this.currentLevel);
+	//	if (!this.bestTime || this.bestTime > this.yourTime) {
+//			this.bestTime = this.yourTime;
+//			localStorage.setItem('bestTime' + this.currentLevel, this.bestTime);
+//		}
+ //       console.log("time2: " + localStorage.getItem('bestTime' + this.currentLevel));
+        console.log("time: " + this.timer.getTime());
+	}
 }

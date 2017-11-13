@@ -13,6 +13,7 @@ export default class Gold {
 
     add(goldadd) {
         this.Gold.text = +this.Gold.text + goldadd;
+        // localStorage.setItem('CurrentGold', this.Gold.text);
     }
 
     reset() {
